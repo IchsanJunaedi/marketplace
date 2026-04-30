@@ -40,7 +40,7 @@ export default function Page() {
 {/*  TopAppBar (from JSON)  */}
 <header className="fixed top-0 right-0 left-64 z-40 border-b border-outline-variant bg-surface-container-lowest flex items-center justify-between px-6 h-16 transition-colors duration-200">
 {/*  Search Bar (on_left)  */}
-<div className="flex-1 max-w-md relative">
+<div className="flex-1 max-w-[28rem] relative">
 <span className="material-symbols-outlined absolute left-sm top-1/2 transform -translate-y-1/2 text-on-surface-variant">search</span>
 <input className="w-full pl-[40px] pr-md py-sm bg-surface rounded border border-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant" placeholder="Search resources..." type="text" />
 </div>

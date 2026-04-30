@@ -113,7 +113,7 @@ export default function Page() {
 <div className="bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col overflow-hidden">
 {/*  Table Toolbar  */}
 <div className="p-md border-b border-outline-variant flex items-center justify-between bg-surface-bright">
-<div className="flex items-center gap-sm w-full max-w-md">
+<div className="flex items-center gap-sm w-full max-w-[28rem]">
 <div className="relative w-full">
 <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]" data-icon="search">search</span>
 <input className="w-full pl-9 pr-4 py-xs bg-surface-container-lowest border border-outline-variant rounded text-body-sm text-on-surface focus:outline-none focus:border-secondary transition-colors h-[32px]" placeholder="Search by SKU, Name, or Category" type="text" />
