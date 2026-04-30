@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings &amp; Security</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#d9e3f6",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed-variant": "#005304",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "error": "#ba1a1a",
+                        "secondary": "#0058bc",
+                        "on-secondary-container": "#fefcff",
+                        "surface-container-high": "#dee9fc",
+                        "surface-container-low": "#eff4ff",
+                        "on-primary-fixed": "#002201",
+                        "surface-variant": "#d9e3f6",
+                        "on-background": "#121c2a",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffd9e2",
+                        "primary-fixed-dim": "#56e24b",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-container": "#e6eeff",
+                        "outline": "#6d7b67",
+                        "outline-variant": "#bccbb4",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#003402",
+                        "on-tertiary-fixed": "#3e001d",
+                        "tertiary-fixed-dim": "#ffb1c8",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#3e4a39",
+                        "on-tertiary-container": "#5b002d",
+                        "primary-fixed": "#76ff66",
+                        "primary-container": "#00aa13",
+                        "inverse-surface": "#27313f",
+                        "on-secondary-fixed": "#001a41",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#121c2a",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#8e004a",
+                        "secondary-container": "#0070eb",
+                        "surface-tint": "#006e08",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary-container": "#fe4e97",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#004493",
+                        "tertiary": "#b80963",
+                        "surface": "#f8f9ff",
+                        "inverse-primary": "#56e24b",
+                        "surface-dim": "#d0dbed",
+                        "primary": "#006e08",
+                        "secondary-fixed": "#d8e2ff",
+                        "background": "#f8f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "unit": "8px",
+                        "gutter": "16px",
+                        "xxl": "48px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h1": ["Inter"],
+                        "h3": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "h2": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "h1": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "h3": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface-container text-on-surface flex min-h-screen">
+<!-- SideNavBar (from JSON) -->
+<aside class="h-screen w-64 fixed left-0 top-0 z-50 border-r border-outline-variant bg-surface-container-lowest flex flex-col py-4 space-y-1">
+<div class="px-6 py-4 mb-xl">
+<h1 class="text-lg font-black tracking-tight text-on-surface">AdminConsole</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Enterprise Suite</p>
+</div>
+<nav class="flex-1 flex flex-col space-y-1 px-sm">
+<!-- Inactive -->
+<a class="flex items-center space-x-md px-md py-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label-md text-label-md">Overview</span>
+</a>
+<a class="flex items-center space-x-md px-md py-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</a>
+<a class="flex items-center space-x-md px-md py-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">shopping_cart</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<a class="flex items-center space-x-md px-md py-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">group</span>
+<span class="font-label-md text-label-md">Customers</span>
+</a>
+<!-- Active State (Determined by Intent: Settings & Security Page) -->
+<a class="flex items-center space-x-md px-md py-sm bg-surface-container-highest text-primary border-r-4 border-primary transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-md text-label-md font-bold">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="ml-64 flex-1 flex flex-col min-w-0">
+<!-- TopAppBar (from JSON) -->
+<header class="fixed top-0 right-0 left-64 z-40 border-b border-outline-variant bg-surface-container-lowest flex items-center justify-between px-6 h-16 transition-colors duration-200">
+<!-- Search Bar (on_left) -->
+<div class="flex-1 max-w-md relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 transform -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-[40px] pr-md py-sm bg-surface rounded border border-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant" placeholder="Search resources..." type="text"/>
+</div>
+<!-- Trailing Icons -->
+<div class="flex items-center space-x-sm">
+<button class="p-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors duration-200">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="p-sm rounded text-primary hover:bg-surface-container transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Page Content -->
+<main class="flex-1 pt-24 px-xl pb-xxl max-w-container-max mx-auto w-full">
+<div class="mb-lg flex justify-between items-end">
+<div>
+<h1 class="font-h1 text-h1 text-on-surface">Settings &amp; Security</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Manage your store profile, integrations, and access control.</p>
+</div>
+<button class="px-lg py-sm bg-primary text-on-primary font-label-md text-label-md rounded hover:bg-surface-tint transition-colors">
+                    Save All Changes
+                </button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+<!-- Left Column: Forms -->
+<div class="lg:col-span-2 space-y-lg">
+<!-- Store Profile Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded p-lg">
+<div class="mb-md border-b border-outline-variant pb-sm">
+<h2 class="font-h3 text-h3 text-on-surface">Store Profile</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Public-facing information displayed on receipts and storefront.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="md:col-span-2">
+<label class="font-label-md text-label-md text-on-surface">Store Name</label>
+<input class="w-full mt-xs px-md py-[10px] bg-surface-container-lowest border border-outline-variant rounded focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary font-body-md text-body-md text-on-surface" type="text" value="Gojek Marketplace Central"/>
+</div>
+<div>
+<label class="font-label-md text-label-md text-on-surface">Support Email</label>
+<input class="w-full mt-xs px-md py-[10px] bg-surface-container-lowest border border-outline-variant rounded focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary font-body-md text-body-md text-on-surface" type="email" value="support@example.com"/>
+</div>
+<div>
+<label class="font-label-md text-label-md text-on-surface">Support Phone</label>
+<input class="w-full mt-xs px-md py-[10px] bg-surface-container-lowest border border-outline-variant rounded focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary font-body-md text-body-md text-on-surface" type="tel" value="+62 812 3456 7890"/>
+</div>
+<div class="md:col-span-2">
+<label class="font-label-md text-label-md text-on-surface">Business Address</label>
+<textarea class="w-full mt-xs px-md py-[10px] bg-surface-container-lowest border border-outline-variant rounded focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary font-body-md text-body-md text-on-surface resize-none" rows="3">Jl. Sudirman No. 123, Jakarta Selatan, 12190</textarea>
+</div>
+</div>
+</section>
+<!-- Payment Gateway Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded p-lg">
+<div class="mb-md border-b border-outline-variant pb-sm flex justify-between items-center">
+<div>
+<h2 class="font-h3 text-h3 text-on-surface">Payment Gateway</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Midtrans integration keys for processing transactions.</p>
+</div>
+<span class="px-sm py-xs bg-surface-container-highest text-primary font-label-sm text-label-sm rounded uppercase tracking-wider">Connected</span>
+</div>
+<div class="space-y-md">
+<div>
+<label class="font-label-md text-label-md text-on-surface">Merchant ID</label>
+<div class="flex mt-xs">
+<input class="w-full px-md py-[10px] bg-surface border border-outline-variant rounded-l focus:outline-none font-body-md text-body-md text-on-surface-variant" disabled="" type="text" value="G73829102"/>
+<button class="px-md border border-l-0 border-outline-variant rounded-r bg-surface-container hover:bg-surface-container-highest text-on-surface-variant transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">content_copy</span>
+</button>
+</div>
+</div>
+<div>
+<label class="font-label-md text-label-md text-on-surface flex justify-between">
+                                    Client Key
+                                    <span class="font-body-sm text-body-sm text-on-surface-variant font-normal">Publicly exposed</span>
+</label>
+<div class="flex mt-xs">
+<input class="w-full px-md py-[10px] bg-surface-container-lowest border border-outline-variant rounded-l focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary font-body-md text-body-md text-on-surface" type="password" value="SB-Mid-client-xxxxxxxxxxxxx"/>
+<button class="px-md border border-l-0 border-outline-variant rounded-r bg-surface-container hover:bg-surface-container-highest text-on-surface-variant transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<div>
+<label class="font-label-md text-label-md text-on-surface flex justify-between">
+                                    Server Key
+                                    <span class="font-label-sm text-error font-normal bg-error-container px-xs rounded">Keep Secret</span>
+</label>
+<div class="flex mt-xs">
+<input class="w-full px-md py-[10px] bg-surface-container-lowest border border-outline-variant rounded-l focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary font-body-md text-body-md text-on-surface" type="password" value="SB-Mid-server-xxxxxxxxxxxxxxxxxxxxx"/>
+<button class="px-md border border-l-0 border-outline-variant rounded-r bg-surface-container hover:bg-surface-container-highest text-on-surface-variant transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: RBAC -->
+<div class="lg:col-span-1">
+<section class="bg-surface-container-lowest border border-outline-variant rounded p-lg sticky top-24">
+<div class="mb-md border-b border-outline-variant pb-sm">
+<h2 class="font-h3 text-h3 text-on-surface">RBAC Roles</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Global permission toggles.</p>
+</div>
+<div class="space-y-md">
+<!-- Role Toggle Item -->
+<div class="flex items-center justify-between py-sm">
+<div>
+<div class="font-label-md text-label-md text-on-surface">Administrator</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Full system access</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-dim peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-secondary rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<hr class="border-t border-outline-variant"/>
+<!-- Role Toggle Item -->
+<div class="flex items-center justify-between py-sm">
+<div>
+<div class="font-label-md text-label-md text-on-surface">Inventory Manager</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Create/edit products</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-dim peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-secondary rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<hr class="border-t border-outline-variant"/>
+<!-- Role Toggle Item -->
+<div class="flex items-center justify-between py-sm">
+<div>
+<div class="font-label-md text-label-md text-on-surface">Customer Support</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">View orders &amp; users</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-dim peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-secondary rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<hr class="border-t border-outline-variant"/>
+<!-- Role Toggle Item -->
+<div class="flex items-center justify-between py-sm">
+<div>
+<div class="font-label-md text-label-md text-on-surface">Read-Only Analyst</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Dashboard metrics only</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-dim peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-secondary rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="mt-lg pt-md border-t border-outline-variant">
+<button class="w-full py-[10px] border border-outline-variant bg-surface-container-lowest text-secondary font-label-md text-label-md rounded hover:bg-surface-container transition-colors flex items-center justify-center space-x-xs">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Create Custom Role</span>
+</button>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout - EnterpriseStore</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-background": "#191c1e",
+                        "surface-variant": "#e1e2e4",
+                        "surface-container": "#edeef0",
+                        "inverse-on-surface": "#f0f1f3",
+                        "outline": "#737686",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffdbcd",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-primary-container": "#eeefff",
+                        "outline-variant": "#c3c6d7",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "secondary-fixed-dim": "#bdc7d8",
+                        "error": "#ba1a1a",
+                        "secondary": "#555f6d",
+                        "surface-container-highest": "#e1e2e4",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#596372",
+                        "surface-container-high": "#e7e8ea",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container-low": "#f3f4f6",
+                        "surface-tint": "#0053db",
+                        "secondary-container": "#d6e0f1",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-secondary-fixed-variant": "#3e4755",
+                        "tertiary": "#943700",
+                        "surface-bright": "#f8f9fb",
+                        "tertiary-container": "#bc4800",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#d9dadc",
+                        "primary": "#004ac6",
+                        "secondary-fixed": "#d9e3f4",
+                        "background": "#f8f9fb",
+                        "surface": "#f8f9fb",
+                        "inverse-primary": "#b4c5ff",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#434655",
+                        "on-tertiary-fixed": "#360f00",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary-container": "#ffede6",
+                        "primary-fixed": "#dbe1ff",
+                        "primary-container": "#2563eb",
+                        "inverse-surface": "#2e3132",
+                        "on-secondary-fixed": "#121c28",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#191c1e"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "unit": "4px",
+                        "table-cell-padding": "12px 16px",
+                        "inline-element-gap": "8px",
+                        "card-gap": "16px",
+                        "container-padding": "24px"
+                    },
+                    fontFamily: {
+                        "h2": ["Inter"],
+                        "body-md": ["Inter"],
+                        "data-tabular": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "h1": ["Inter"]
+                    },
+                    fontSize: {
+                        "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "data-tabular": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface-container-low text-on-surface antialiased font-body-md min-h-screen flex flex-col">
+<!-- Minimal Header for Transactional Page -->
+<header class="bg-surface-container-lowest border-b border-outline-variant sticky top-0 z-50">
+<div class="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between">
+<div class="text-xl font-black text-on-background tracking-tight">EnterpriseStore</div>
+<div class="flex items-center gap-2 text-secondary font-body-sm">
+<span class="material-symbols-outlined icon-fill text-sm">lock</span>
+<span>Secure Checkout</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow max-w-[1440px] mx-auto w-full px-6 py-8">
+<div class="mb-6">
+<h1 class="font-h1 text-h1 text-on-background">Checkout</h1>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-card-gap items-start">
+<!-- Left Column: Multi-Step Form -->
+<div class="lg:col-span-8 space-y-card-gap">
+<!-- Step 1: Shipping Address -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-container-padding">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-surface-variant">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-on-primary font-h2 text-h2">1</div>
+<h2 class="font-h2 text-h2 text-on-surface">Shipping Address</h2>
+</div>
+<form class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-5">
+<div class="col-span-1">
+<label class="block font-body-sm text-body-sm text-on-surface-variant mb-1 font-medium">First Name</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-2 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" type="text" value="Alex"/>
+</div>
+<div class="col-span-1">
+<label class="block font-body-sm text-body-sm text-on-surface-variant mb-1 font-medium">Last Name</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-2 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" type="text" value="Rivers"/>
+</div>
+<div class="col-span-1 md:col-span-2">
+<label class="block font-body-sm text-body-sm text-on-surface-variant mb-1 font-medium">Address Line 1</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-2 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" type="text" value="123 Enterprise Parkway, Suite 400"/>
+</div>
+<div class="col-span-1">
+<label class="block font-body-sm text-body-sm text-on-surface-variant mb-1 font-medium">City</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-2 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" type="text" value="Tech Hub"/>
+</div>
+<div class="col-span-1">
+<label class="block font-body-sm text-body-sm text-on-surface-variant mb-1 font-medium">Postal Code</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-2 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" type="text" value="90210"/>
+</div>
+<div class="col-span-1 md:col-span-2 mt-2">
+<button class="bg-surface-container text-on-surface font-body-md text-body-md font-medium px-4 py-2 rounded border border-outline-variant hover:bg-surface-variant transition-colors" type="button">Save Address</button>
+</div>
+</form>
+</div>
+<!-- Step 2: Shipping Method -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-container-padding">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-surface-variant">
+<div class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-outline-variant text-outline font-h2 text-h2">2</div>
+<h2 class="font-h2 text-h2 text-on-surface">Shipping Method</h2>
+</div>
+<div class="space-y-3">
+<!-- Option 1: Selected -->
+<label class="flex items-start gap-4 p-4 rounded border-2 border-primary bg-primary-fixed cursor-pointer transition-colors">
+<div class="flex-shrink-0 mt-0.5">
+<input checked="" class="w-4 h-4 text-primary focus:ring-primary border-outline-variant" name="shipping" type="radio"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-center mb-1">
+<span class="font-h2 text-body-md font-semibold text-on-background">Raja Ongkir - JNE REG</span>
+<span class="font-data-tabular text-data-tabular text-on-background">$15.00</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Estimated delivery: 2-3 business days</p>
+</div>
+</label>
+<!-- Option 2 -->
+<label class="flex items-start gap-4 p-4 rounded border border-outline-variant hover:border-outline cursor-pointer transition-colors">
+<div class="flex-shrink-0 mt-0.5">
+<input class="w-4 h-4 text-primary focus:ring-primary border-outline-variant" name="shipping" type="radio"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-center mb-1">
+<span class="font-h2 text-body-md font-semibold text-on-background">Raja Ongkir - JNE YES</span>
+<span class="font-data-tabular text-data-tabular text-on-background">$25.00</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Estimated delivery: 1 business day (Next Day)</p>
+</div>
+</label>
+</div>
+</div>
+<!-- Step 3: Payment Method -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-container-padding">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-surface-variant">
+<div class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-outline-variant text-outline font-h2 text-h2">3</div>
+<h2 class="font-h2 text-h2 text-on-surface">Payment</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+<!-- Credit Card -->
+<label class="flex flex-col items-center justify-center p-4 rounded border border-outline-variant hover:border-outline cursor-pointer transition-colors text-center gap-2">
+<input class="sr-only" name="payment" type="radio"/>
+<span class="material-symbols-outlined text-outline text-3xl">credit_card</span>
+<span class="font-body-md text-body-md font-medium text-on-surface">Credit Card</span>
+</label>
+<!-- Midtrans Selected -->
+<label class="flex flex-col items-center justify-center p-4 rounded border-2 border-primary bg-primary-fixed cursor-pointer transition-colors text-center gap-2">
+<input checked="" class="sr-only" name="payment" type="radio"/>
+<span class="material-symbols-outlined text-primary text-3xl icon-fill">account_balance_wallet</span>
+<span class="font-body-md text-body-md font-medium text-on-background">Midtrans Gateway</span>
+</label>
+</div>
+<!-- Selected Payment Details Area -->
+<div class="bg-surface-container-low p-4 rounded border border-surface-variant">
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">You will be redirected to the secure Midtrans payment portal to complete your transaction via Virtual Account, GoPay, or other supported methods.</p>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+<span class="font-label-caps text-label-caps uppercase">Secure Transaction</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Order Summary -->
+<div class="lg:col-span-4">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-container-padding sticky top-24">
+<h2 class="font-h2 text-h2 text-on-surface mb-6 pb-4 border-b border-surface-variant">Order Summary</h2>
+<!-- Items -->
+<div class="space-y-4 mb-6 pb-6 border-b border-surface-variant">
+<!-- Item 1 -->
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded border border-outline-variant bg-surface overflow-hidden flex-shrink-0">
+<img alt="Product" class="w-full h-full object-cover" data-alt="Sleek white smart watch with minimal face resting on a light grey surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsDCgWsS230i1FJsA-o6zAp9GS-3wHXePdx7wRM3v2ZERus2i56vMco8hK8qmnlNi73YMOUdW_pqp_I8TBewly_WhGrkQ9VjlomNSREh-xKfaIZ1wv0uPtTdjEJ9ykGu7QgFq-V1R-G47yAHhr1TGTpe9-Mu9cUgHd_AFPP7zczKrtEUrzIGD3qKIwuko2qSvs4ZMk5rxpNQgU5wZdzXExEJpZhNmj3-LgMD3za1lXDigjmITh-I3DGZamsp5lP8D4Excz2hIDWK9U"/>
+</div>
+<div class="flex-grow flex flex-col justify-between">
+<div>
+<h3 class="font-body-md text-body-md text-on-background font-medium line-clamp-1">Enterprise Smart Watch Pro</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Qty: 1</p>
+</div>
+<div class="font-data-tabular text-data-tabular text-on-background text-right">$299.00</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded border border-outline-variant bg-surface overflow-hidden flex-shrink-0">
+<img alt="Product" class="w-full h-full object-cover" data-alt="Premium black over-ear wireless headphones on a dark textured background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDio6yRagkav0kh1jhpWGUvFi39C8VyHpeFyyQemrvYJTIJRU-QNhK7y0bvTD6NM4HhnVKbfsM8xYztTE5RDJLZ068eFaw6e6COFsL-oQ-ijWlNUgymOYHtfGXk27VKuW7-MpSYQ2Y7oXASrIYY3uNmQGVkkxFEeRiBrt3ZnyqzkVUQ30txXl6gShoHrjB_yUvuNdRjRugFX4VEaFa9l2vlQDLsVXdzT2C9VUhWpnXvLHOkHNQxRkm_qWC1WmumxnruOkJEXsJzTklT"/>
+</div>
+<div class="flex-grow flex flex-col justify-between">
+<div>
+<h3 class="font-body-md text-body-md text-on-background font-medium line-clamp-1">Noise Cancelling Headphones</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Qty: 2</p>
+</div>
+<div class="font-data-tabular text-data-tabular text-on-background text-right">$398.00</div>
+</div>
+</div>
+</div>
+<!-- Calculations -->
+<div class="space-y-3 mb-6">
+<div class="flex justify-between font-body-sm text-body-sm text-on-surface-variant">
+<span>Subtotal</span>
+<span class="font-data-tabular text-data-tabular text-on-background">$697.00</span>
+</div>
+<div class="flex justify-between font-body-sm text-body-sm text-on-surface-variant">
+<span>Shipping (JNE REG)</span>
+<span class="font-data-tabular text-data-tabular text-on-background">$15.00</span>
+</div>
+<div class="flex justify-between font-body-sm text-body-sm text-on-surface-variant">
+<span>Tax (10%)</span>
+<span class="font-data-tabular text-data-tabular text-on-background">$69.70</span>
+</div>
+</div>
+<!-- Total -->
+<div class="flex justify-between items-center mb-8 pt-4 border-t border-surface-variant">
+<span class="font-h2 text-h2 text-on-background">Total</span>
+<span class="font-h1 text-h1 text-primary font-bold">$781.70</span>
+</div>
+<!-- Action -->
+<button class="w-full bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-body-md text-body-md font-medium py-3 rounded transition-colors shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+                        Place Order via Midtrans
+                    </button>
+<p class="text-center font-body-sm text-body-sm text-on-surface-variant mt-4">
+                        By placing your order, you agree to our Terms of Service and Privacy Policy.
+                    </p>
+</div>
+</div>
+</div>
+</main>
+</body></html>
