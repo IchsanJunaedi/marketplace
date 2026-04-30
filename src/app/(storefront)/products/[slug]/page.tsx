@@ -55,20 +55,18 @@ export default async function Page({ params }: Props) {
 <div className="aspect-[4/3] rounded-lg bg-surface-container overflow-hidden border border-outline-variant relative">
 <img alt={product.name} className="w-full h-full object-cover" src={mainImage} />
 </div>
+{product.images.length > 1 ? (
 <div className="grid grid-cols-4 gap-inline-element-gap">
-<button className="aspect-square rounded-lg border-2 border-primary overflow-hidden cursor-pointer">
-<img alt="Thumbnail 1" className="w-full h-full object-cover" data-alt="Front view detail of enterprise server unit showing cooling vents and drive bays, clean studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsJ4x2-1QJkdlpiAdtZF1mDCkk2S-Z23zZYrwFfKMV2AfKOROyZT7Di18VhZHc7MF4b3UINa4iin4Fx2VkPwyr5FL_BChQkCQTycjrUsp5PyNS7Ev-k_DDcWVq3TYGi0R4POhcx0Klb-s8e3tDrOW-JI0xBrViWhEw7UpiX4rcnRbD-4hajsS-ueRtl26L1kZfld7LhmooNuaNPHYNIx_z3zyvKVWLp58uYnt4xh4v45LR9T6AVSkmNl3OclLdkTOsCYYL32lyjmO_" />
+{product.images.map((img, i) => (
+<button
+  key={img.id}
+  className={`aspect-square rounded-lg overflow-hidden cursor-pointer ${i === 0 ? "border-2 border-primary" : "border border-outline-variant hover:border-outline transition-colors opacity-70 hover:opacity-100"}`}
+>
+<img alt={img.alt ?? `${product.name} ${i + 1}`} className="w-full h-full object-cover" src={img.url} />
 </button>
-<button className="aspect-square rounded-lg border border-outline-variant hover:border-outline transition-colors overflow-hidden cursor-pointer opacity-70 hover:opacity-100">
-<img alt="Thumbnail 2" className="w-full h-full object-cover" data-alt="Rear view of network switch showing multiple ethernet ports and redundant power supply inputs, clinical lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1jry_t7qL-KJcX8ahXTSi_FEy7iocJuOzjXYKAMumqgi-aXJVfjwr-6BoPH3DaloxvFDGQqF4IBsGRt7rxTmS-wAW7blj0gtHMjUdTD2jvFkyRw0DTSTEoPpxutf8UUzc_yWPm5IQeqL67AXrBYnH7AYc23qbHtoLP-Tc4q1G-m_UBI6VIxKsKHkrU15CW_rmM4vF8fWOlSHUWM_XaFHyT4ZwuAyzOrljpElhuB8lV3DXMDIFetWtnjTg5W0YrCn_gN83Zv7hzQSj" />
-</button>
-<button className="aspect-square rounded-lg border border-outline-variant hover:border-outline transition-colors overflow-hidden cursor-pointer opacity-70 hover:opacity-100">
-<img alt="Thumbnail 3" className="w-full h-full object-cover" data-alt="Close up macro shot of internal server motherboard components and processing chips, cool technical blue tint" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLVF3Ta1IDizUJDWiKkuAmqv-0wqFEQitRn8our5Q1FuUXL1-RcbiD3zx9dQsFRfBeiz-FyRLb3QOnYiCHK6PaF4EZudPae2G2ZgCo7KdXqzQASFtdNMojVvmyF8i5ora_Z37lBOomf_7KtVnvrntedx6SByoxNBu7YUFzHqKYalURi2gaaGUha-Cs0MPY9h46VD7pZvqbzG8s_Doe_PzHmwDdQvKxNk6Mo4odDRDnMMMmDaDjNyHMp2j2TPwz9rBudCghuZD81pUW" />
-</button>
-<button className="aspect-square rounded-lg border border-outline-variant hover:border-outline transition-colors overflow-hidden cursor-pointer opacity-70 hover:opacity-100 bg-surface-container flex items-center justify-center">
-<span className="material-symbols-outlined text-outline text-[32px]">play_circle</span>
-</button>
+))}
 </div>
+) : null}
 </div>
 <div className="lg:col-span-5 bg-surface-container-lowest border border-surface-variant rounded-xl p-container-padding flex flex-col gap-6 sticky top-24">
 <div className="flex flex-col gap-2">
@@ -101,20 +99,6 @@ export default async function Page({ params }: Props) {
 <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed whitespace-pre-line">
 {product.description ?? "Belum ada deskripsi untuk produk ini."}
 </p>
-<ul className="flex flex-col gap-2 mt-2 font-body-sm text-body-sm text-on-surface-variant">
-<li className="flex items-start gap-2">
-<span className="material-symbols-outlined text-[16px] text-primary mt-0.5">memory</span>
-                            Dual 24-Core Processors
-                        </li>
-<li className="flex items-start gap-2">
-<span className="material-symbols-outlined text-[16px] text-primary mt-0.5">dns</span>
-                            256GB ECC DDR5 Memory
-                        </li>
-<li className="flex items-start gap-2">
-<span className="material-symbols-outlined text-[16px] text-primary mt-0.5">router</span>
-                            4x 10GbE SFP+ Networking
-                        </li>
-</ul>
 </div>
 <div className="flex flex-col gap-4 mt-4">
 <div className="flex items-center gap-4">
