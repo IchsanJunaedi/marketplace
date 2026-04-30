@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EnterpriseStore - Shopping Cart</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#191c1e",
+                        "surface-variant": "#e1e2e4",
+                        "surface-container": "#edeef0",
+                        "inverse-on-surface": "#f0f1f3",
+                        "outline": "#737686",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffdbcd",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-primary-container": "#eeefff",
+                        "outline-variant": "#c3c6d7",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "secondary-fixed-dim": "#bdc7d8",
+                        "error": "#ba1a1a",
+                        "secondary": "#555f6d",
+                        "surface-container-highest": "#e1e2e4",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#596372",
+                        "surface-container-high": "#e7e8ea",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container-low": "#f3f4f6",
+                        "surface-tint": "#0053db",
+                        "secondary-container": "#d6e0f1",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-secondary-fixed-variant": "#3e4755",
+                        "tertiary": "#943700",
+                        "surface-bright": "#f8f9fb",
+                        "tertiary-container": "#bc4800",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#d9dadc",
+                        "primary": "#004ac6",
+                        "secondary-fixed": "#d9e3f4",
+                        "background": "#f8f9fb",
+                        "surface": "#f8f9fb",
+                        "inverse-primary": "#b4c5ff",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#434655",
+                        "on-tertiary-fixed": "#360f00",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-tertiary-container": "#ffede6",
+                        "primary-fixed": "#dbe1ff",
+                        "primary-container": "#2563eb",
+                        "inverse-surface": "#2e3132",
+                        "on-secondary-fixed": "#121c28",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#191c1e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "table-cell-padding": "12px 16px",
+                        "inline-element-gap": "8px",
+                        "card-gap": "16px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter"],
+                        "body-md": ["Inter"],
+                        "data-tabular": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "h1": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "data-tabular": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface-container-low text-on-surface font-body-md antialiased min-h-screen">
+<!-- TopNavBar -->
+<nav class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flat no shadows fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 max-w-[1440px] mx-auto docked full-width top-0 border-b">
+<div class="flex items-center gap-8">
+<div class="text-xl font-black text-gray-900 dark:text-white">
+                EnterpriseStore
+            </div>
+<div class="hidden md:flex gap-6 font-inter text-sm font-medium">
+<a class="text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 pb-1 active:scale-95 transition-transform duration-150" href="#">Shop</a>
+<a class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors active:scale-95 transition-transform duration-150" href="#">Categories</a>
+<a class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors active:scale-95 transition-transform duration-150" href="#">Deals</a>
+<a class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors active:scale-95 transition-transform duration-150" href="#">Support</a>
+</div>
+</div>
+<div class="flex items-center gap-4 text-gray-600 dark:text-gray-400">
+<button class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors p-2 rounded-full active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors p-2 rounded-full active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="bg-gray-900 dark:bg-black border-r border-gray-800 flat no shadows fixed left-0 top-0 h-screen flex flex-col pt-16 h-full w-64 border-r border-gray-800 hidden md:flex z-40">
+<div class="p-6 border-b border-gray-800">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary-fixed-dim font-bold">
+                    AR
+                </div>
+<div>
+<div class="text-white text-lg font-bold">Alex Rivers</div>
+<div class="font-inter text-sm antialiased text-gray-400">Premium Member</div>
+</div>
+</div>
+</div>
+<nav class="flex-1 py-4 font-inter text-sm antialiased">
+<a class="flex items-center gap-3 text-gray-400 px-4 py-3 hover:text-white hover:bg-gray-800 transition-all duration-200 active:bg-gray-700 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 bg-gray-800 text-white border-l-4 border-blue-600 px-4 py-3 hover:bg-gray-800 transition-all duration-200 active:bg-gray-700 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="package_2">package_2</span>
+                My Orders
+            </a>
+<a class="flex items-center gap-3 text-gray-400 px-4 py-3 hover:text-white hover:bg-gray-800 transition-all duration-200 active:bg-gray-700 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+                Wishlist
+            </a>
+<a class="flex items-center gap-3 text-gray-400 px-4 py-3 hover:text-white hover:bg-gray-800 transition-all duration-200 active:bg-gray-700 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                Account Settings
+            </a>
+<a class="flex items-center gap-3 text-gray-400 px-4 py-3 hover:text-white hover:bg-gray-800 transition-all duration-200 active:bg-gray-700 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+                Support
+            </a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-20 px-6 pb-12 max-w-[1440px] mx-auto min-h-screen flex flex-col">
+<div class="mb-card-gap">
+<h1 class="font-h1 text-h1 text-on-background">Shopping Cart</h1>
+</div>
+<div class="flex flex-col lg:flex-row gap-card-gap items-start">
+<!-- Cart Items Data Table (Bento style container) -->
+<div class="flex-1 w-full bg-surface-container-lowest border border-surface-variant rounded-lg overflow-hidden">
+<div class="px-container-padding py-4 border-b border-surface-variant bg-surface-bright flex justify-between items-center">
+<span class="font-data-tabular text-data-tabular text-on-surface-variant uppercase tracking-wider">Item Details</span>
+<span class="font-data-tabular text-data-tabular text-on-surface-variant uppercase tracking-wider pl-12">Action</span>
+</div>
+<div class="flex flex-col">
+<!-- Item 1 -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-container-padding border-b border-surface-variant hover:bg-surface-bright transition-colors">
+<div class="flex items-center gap-4 flex-1">
+<img alt="High-end professional over-ear headphones on a sleek desk" class="w-16 h-16 object-cover rounded-DEFAULT border border-surface-variant" data-alt="High-end professional over-ear headphones in matte black on a sleek white desk setup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnSIJZevt7vjYHlOB6D08ZZy70bz71oEAOdj_WEH4Cp-nn1TvlfFSSRsCC29KpLd2RSwMGmzqz5LfkjSuQTpg2sEvuxeF_Q5HrAosrTH1pF23ZBu5QdyiUsjhciJDJWJa48h-fXYe7JgRCjk5Cek8sL9NWxoWcsMw5WQx8G0lZwDcbFb8MZLUUo8CRGVqNrdM71m3ix5uZMK7vNXxV27Vmg2mL14vptQ-Vqi7BMEHXScAHI6BV5LMZELMIMMViuACfNoILU5nvAx4n"/>
+<div>
+<div class="font-h2 text-h2 text-on-surface mb-1">Acoustic Pro Headphones X-1</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">SKU: AP-X1-BLK</div>
+<div class="font-data-tabular text-data-tabular text-primary mt-1">$ 299.00</div>
+</div>
+</div>
+<div class="flex items-center gap-8 mt-4 sm:mt-0 w-full sm:w-auto justify-between sm:justify-end">
+<div class="flex items-center border border-outline-variant rounded-DEFAULT h-9 bg-surface-container-lowest">
+<button class="w-9 h-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors rounded-l-DEFAULT">
+<span class="material-symbols-outlined" data-icon="remove" style="font-size: 18px;">remove</span>
+</button>
+<input class="w-12 h-full text-center border-x border-outline-variant border-y-0 font-data-tabular text-data-tabular focus:ring-0 focus:border-outline-variant bg-surface-container-lowest p-0" type="text" value="1"/>
+<button class="w-9 h-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors rounded-r-DEFAULT">
+<span class="material-symbols-outlined" data-icon="add" style="font-size: 18px;">add</span>
+</button>
+</div>
+<div class="w-24 text-right font-data-tabular text-data-tabular text-on-surface font-semibold">
+                                $ 299.00
+                            </div>
+<button class="text-on-surface-variant hover:text-error transition-colors p-2" title="Remove item">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-container-padding hover:bg-surface-bright transition-colors">
+<div class="flex items-center gap-4 flex-1">
+<img alt="Minimalist mechanical keyboard with white keycaps on dark background" class="w-16 h-16 object-cover rounded-DEFAULT border border-surface-variant" data-alt="Minimalist mechanical keyboard with white keycaps and aluminum frame on a dark grey surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCv1n3WON-8dNw5vpI8KxMyuG87-NpCHyQ0arT5ANWcZ9gzr1KT7sDw5hrYW-bfo230KYklQ9HOZ78HKftSlc3AfFK_h_-9N_zWR-L98K80xArKD33laeG89LDn0vKBgh1qovV6JqRNwrUj7-KLfRJM9WJkN9OyTuUSuUFwx4SagWIjkkmpcCIz6qVpTO3fEkbzN2OESYRTg6LEaH_YBFpTxyKJ-noL436XaRmnLldO-nifSZxB20z9kcT4opz-ySUKvQKhcFM7Xh5p"/>
+<div>
+<div class="font-h2 text-h2 text-on-surface mb-1">Tactile Master Keyboard</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">SKU: TM-KBD-WHT</div>
+<div class="font-data-tabular text-data-tabular text-primary mt-1">$ 145.50</div>
+</div>
+</div>
+<div class="flex items-center gap-8 mt-4 sm:mt-0 w-full sm:w-auto justify-between sm:justify-end">
+<div class="flex items-center border border-outline-variant rounded-DEFAULT h-9 bg-surface-container-lowest">
+<button class="w-9 h-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors rounded-l-DEFAULT">
+<span class="material-symbols-outlined" data-icon="remove" style="font-size: 18px;">remove</span>
+</button>
+<input class="w-12 h-full text-center border-x border-outline-variant border-y-0 font-data-tabular text-data-tabular focus:ring-0 focus:border-outline-variant bg-surface-container-lowest p-0" type="text" value="2"/>
+<button class="w-9 h-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors rounded-r-DEFAULT">
+<span class="material-symbols-outlined" data-icon="add" style="font-size: 18px;">add</span>
+</button>
+</div>
+<div class="w-24 text-right font-data-tabular text-data-tabular text-on-surface font-semibold">
+                                $ 291.00
+                            </div>
+<button class="text-on-surface-variant hover:text-error transition-colors p-2" title="Remove item">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Summary Sidebar -->
+<div class="w-full lg:w-[380px] flex flex-col gap-card-gap">
+<div class="bg-surface-container-lowest border border-surface-variant rounded-lg p-container-padding flex flex-col shadow-sm">
+<h2 class="font-h2 text-h2 text-on-surface mb-6 border-b border-surface-variant pb-4">Order Summary</h2>
+<div class="flex flex-col gap-4 mb-6">
+<div class="flex justify-between items-center font-body-md text-body-md text-on-surface-variant">
+<span>Subtotal (3 items)</span>
+<span class="font-data-tabular text-data-tabular text-on-surface">$ 590.00</span>
+</div>
+<div class="flex justify-between items-center font-body-md text-body-md text-on-surface-variant">
+<span>Shipping</span>
+<span class="font-data-tabular text-data-tabular text-on-surface">Calculated at checkout</span>
+</div>
+<div class="flex justify-between items-center font-body-md text-body-md text-on-surface-variant">
+<span>Tax (Estimated)</span>
+<span class="font-data-tabular text-data-tabular text-on-surface">$ 47.20</span>
+</div>
+</div>
+<!-- Voucher Input -->
+<div class="mb-6 bg-surface-bright p-4 rounded-DEFAULT border border-surface-variant">
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2" for="voucher">Voucher Diskon</label>
+<div class="flex">
+<input class="flex-1 bg-surface-container-lowest border border-outline-variant border-r-0 rounded-l-DEFAULT px-3 py-2 font-body-sm text-body-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-shadow placeholder-outline-variant" id="voucher" placeholder="Enter code" type="text"/>
+<button class="bg-surface-container text-on-surface px-4 py-2 border border-outline-variant rounded-r-DEFAULT font-label-caps text-label-caps hover:bg-surface-variant transition-colors">
+                                Apply
+                            </button>
+</div>
+</div>
+<div class="border-t border-surface-variant pt-4 mb-6">
+<div class="flex justify-between items-end">
+<span class="font-h2 text-h2 text-on-surface">Total</span>
+<span class="font-h1 text-h1 text-primary">$ 637.20</span>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-3 rounded-DEFAULT font-label-caps text-label-caps hover:bg-on-primary-fixed-variant transition-colors flex justify-center items-center gap-2">
+<span class="material-symbols-outlined" data-icon="lock" style="font-size: 18px;">lock</span>
+                        Proceed to Checkout
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

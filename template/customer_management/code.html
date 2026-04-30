@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Management</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#d9e3f6",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed-variant": "#005304",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "error": "#ba1a1a",
+                    "secondary": "#0058bc",
+                    "on-secondary-container": "#fefcff",
+                    "surface-container-high": "#dee9fc",
+                    "surface-container-low": "#eff4ff",
+                    "on-primary-fixed": "#002201",
+                    "surface-variant": "#d9e3f6",
+                    "on-background": "#121c2a",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed": "#ffd9e2",
+                    "primary-fixed-dim": "#56e24b",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-container": "#e6eeff",
+                    "outline": "#6d7b67",
+                    "outline-variant": "#bccbb4",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#003402",
+                    "on-tertiary-fixed": "#3e001d",
+                    "tertiary-fixed-dim": "#ffb1c8",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#3e4a39",
+                    "on-tertiary-container": "#5b002d",
+                    "primary-fixed": "#76ff66",
+                    "primary-container": "#00aa13",
+                    "inverse-surface": "#27313f",
+                    "on-secondary-fixed": "#001a41",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#121c2a",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed-variant": "#8e004a",
+                    "secondary-container": "#0070eb",
+                    "surface-tint": "#006e08",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary-container": "#fe4e97",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#004493",
+                    "tertiary": "#b80963",
+                    "surface": "#f8f9ff",
+                    "inverse-primary": "#56e24b",
+                    "surface-dim": "#d0dbed",
+                    "primary": "#006e08",
+                    "secondary-fixed": "#d8e2ff",
+                    "background": "#f8f9ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "unit": "8px",
+                    "gutter": "16px",
+                    "xxl": "48px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "h1": ["Inter"],
+                    "h3": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "h2": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                    "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                    "h1": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "h3": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                    "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                    "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                    "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                    "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "600" }]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-hidden flex h-screen w-full">
+<!-- SideNavBar -->
+<aside class="bg-surface-container-lowest border-r border-outline-variant h-screen w-64 fixed left-0 top-0 z-50 flex flex-col py-md space-y-xs transition-all duration-150 ease-in-out">
+<div class="px-lg py-md mb-sm">
+<h2 class="font-h3 text-h3 text-on-surface tracking-tight">AdminConsole</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-xs">Enterprise Suite</p>
+</div>
+<nav class="flex-1 flex flex-col gap-xs px-sm">
+<!-- Inactive -->
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Overview</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Inventory</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<!-- Active -->
+<a class="flex items-center gap-md px-md py-sm rounded-lg bg-surface-container text-primary border-r-4 border-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-label-md text-label-md font-bold">Customers</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 mt-auto" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="flex-1 ml-64 flex flex-col min-w-0 h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest border-b border-outline-variant flex items-center justify-between px-lg h-16 w-full shrink-0 z-40 transition-colors duration-200">
+<div class="flex items-center gap-md">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-sm text-on-surface-variant text-[20px]">search</span>
+<input class="pl-xl pr-md py-sm bg-surface-container-low border border-outline-variant rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary w-64 transition-all" placeholder="Search AdminPanel..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-sm rounded-full text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-sm rounded-full text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="ml-sm flex items-center gap-sm p-xs pr-md rounded-full border border-outline-variant hover:bg-surface-container-low transition-colors">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-primary font-label-md">
+<span class="material-symbols-outlined">account_circle</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Admin User</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 overflow-y-auto p-lg bg-background">
+<div class="mb-lg flex items-center justify-between">
+<div>
+<h1 class="font-h1 text-h1 text-on-surface">Customer Database</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Manage your enterprise clientele and view transaction histories.</p>
+</div>
+<button class="bg-primary text-on-primary px-md py-sm rounded-lg font-label-md text-label-md flex items-center gap-sm hover:bg-surface-tint transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    New Customer
+                </button>
+</div>
+<!-- Dashboard Split Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-lg h-[calc(100vh-12rem)] min-h-[600px]">
+<!-- Left: Directory Table (Span 2) -->
+<div class="xl:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col shadow-sm">
+<div class="px-md py-sm border-b border-outline-variant bg-surface flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant">filter_list</span>
+<span class="font-label-md text-label-md text-on-surface">All Customers</span>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface p-xs rounded hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<div class="flex-1 overflow-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low sticky top-0 border-b border-outline-variant z-10">
+<tr>
+<th class="py-sm px-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Name</th>
+<th class="py-sm px-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Email</th>
+<th class="py-sm px-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total Orders</th>
+<th class="py-sm px-md font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Active Row Example -->
+<tr class="hover:bg-surface-container-low cursor-pointer transition-colors bg-surface-container-lowest border-l-4 border-l-transparent">
+<td class="py-sm px-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-variant flex-shrink-0">
+<img alt="Sarah Jenkins portrait" class="w-full h-full object-cover" data-alt="close up professional headshot of a smiling young woman with dark hair against a light grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxTqgggN41JWRX7tyH3hvYRKkN-vXt8-6N8WVI6CxCsX32YHurzlfZ25LbLaGoHxGMLTDy58qHsrW1dtcZJ4yXDj3QL8Dbb8mVngg6OYiVzKxxE2igq5C1V0YSdzPtPpOYHJRCz-AlL5XWaUURMmks7sKpvj7V7V-apisvhrpicwqToHxAezpAeg4Pvr-BNppodnbevTrWs48HroBb2etzFyCy7ty882M1uEn68OBbVMzUgqBgTAYFLi-Hn77tbVPw3ihfrqsfQwxU"/>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Sarah Jenkins</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Acme Corp</div>
+</div>
+</div>
+</td>
+<td class="py-sm px-md font-body-sm text-body-sm text-on-surface">s.jenkins@acmecorp.com</td>
+<td class="py-sm px-md font-body-sm text-body-sm text-on-surface">142</td>
+<td class="py-sm px-md">
+<span class="inline-flex items-center px-sm py-xs rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm">
+                                            Active
+                                        </span>
+</td>
+</tr>
+<!-- Regular Rows -->
+<tr class="hover:bg-surface-container-low cursor-pointer transition-colors bg-surface border-l-4 border-l-primary shadow-[inset_0_1px_0_0_#bccbb4,inset_0_-1px_0_0_#bccbb4] relative z-0">
+<td class="py-sm px-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-variant flex-shrink-0">
+<img alt="Marcus Chen portrait" class="w-full h-full object-cover" data-alt="professional headshot of a smiling asian man wearing a suit jacket against a blurred office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0_Dj3zmK0lQbbz4XwbrScAZhatxopWp7fjFXGNI9tcZZpe0yPT_ZtiVPN5uXRNCar7Nnh4zOzVfabvSYVi6yUoiy38f4R3cu6dKuw5k7cz2NSBEdiB_SC2gR9BLNA_DjioOSf9sy_I3UzYyLvNJHLozcF4Htmse5b7_dCZyx8YMBlvBCl-TeqkmQvu6d74FHKfqFFVQ3cTUpBoNTFGb-RehhBaZlyXPwQqHB3mTt095udMycU3lvFH_nJhsBvHbkQkEBaByG_FToT"/>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Marcus Chen</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">TechFlow Inc</div>
+</div>
+</div>
+</td>
+<td class="py-sm px-md font-body-sm text-body-sm text-on-surface">m.chen@techflow.io</td>
+<td class="py-sm px-md font-body-sm text-body-sm text-on-surface">87</td>
+<td class="py-sm px-md">
+<span class="inline-flex items-center px-sm py-xs rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm">
+                                            Active
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low cursor-pointer transition-colors bg-surface-container-lowest border-l-4 border-l-transparent">
+<td class="py-sm px-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-h3 flex-shrink-0">
+                                                EW
+                                            </div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Elena Weaver</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Global Logistics</div>
+</div>
+</div>
+</td>
+<td class="py-sm px-md font-body-sm text-body-sm text-on-surface">elena.w@globallogistics.net</td>
+<td class="py-sm px-md font-body-sm text-body-sm text-on-surface">34</td>
+<td class="py-sm px-md">
+<span class="inline-flex items-center px-sm py-xs rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-label-sm">
+                                            Inactive
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low cursor-pointer transition-colors bg-surface-container-lowest border-l-4 border-l-transparent">
+<td class="py-sm px-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-variant flex-shrink-0">
+<img alt="David Miller portrait" class="w-full h-full object-cover" data-alt="professional headshot of a middle aged man with short hair and stubble wearing a light blue shirt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_OAAnRCue2XDsQKqnboStHY5ufhBC0VeAJJardCWvP2FizLEtUbAHAPBIcTN0gdTX4YpIZ_sNwB5QVyNGMgbE8N1CaWUgSzmXODq15p29XLEk3kSKiizQsB66q6cUAnMz0tfY-knz1ajLM6E8dednQnw7J8zS12vCc2Q1zOWvgYFXaLmToLACvaAmJoMtUPxX2Ap3l5nMBdcYaanEBnx7ktplojUPQcpBAoiMWKUrlchl4OG2Sg9UE4YAgIF_3LGSeA7srAYZWm0D"/>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">David Miller</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Miller &amp; Co</div>
+</div>
+</div>
+</td>
+<td class="py-sm px-md font-body-sm text-body-sm text-on-surface">dmiller@millerco.com</td>
+<td class="py-sm px-md font-body-sm text-body-sm text-on-surface">12</td>
+<td class="py-sm px-md">
+<span class="inline-flex items-center px-sm py-xs rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm">
+                                            Suspended
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-md py-sm border-t border-outline-variant bg-surface flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Showing 1 to 4 of 240 entries</span>
+<div class="flex items-center gap-sm">
+<button class="p-xs rounded border border-outline-variant text-on-surface-variant disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="p-xs rounded border border-outline-variant text-on-surface hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right: Details & Tx History (Span 1) -->
+<div class="xl:col-span-1 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col shadow-sm">
+<!-- Profile Header -->
+<div class="p-md border-b border-outline-variant flex items-start justify-between bg-surface-bright relative">
+<div class="absolute inset-0 h-16 bg-gradient-to-r from-surface-container to-surface-container-highest opacity-50 z-0"></div>
+<div class="flex flex-col items-center text-center w-full z-10 pt-sm">
+<div class="w-20 h-20 rounded-full overflow-hidden border-4 border-surface-container-lowest shadow-sm mb-sm bg-surface-variant">
+<img alt="Marcus Chen portrait" class="w-full h-full object-cover" data-alt="professional headshot of a smiling asian man wearing a suit jacket against a blurred office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTI8HSALml2J4REoIj8oHLQMheVbnxAdXSWogr0eB8uHxuqxDSK8wOHq6lwct8IE0Ht965_ERrxlQJllme5GfGo--E_mvK5r4ARDiw_eCx5bdor6UY9CXsyK0SOlP1eeE3aNTqSQYPATfA-Ui-SRycgUemEsSniee1-nQC6QgBBi2gX8WlnoO9Of-gRZLpFRltJRTr-6xx0Z6J3aWeRGTbBoZNu5Qcb7T6HCboDH9VxAIiDzlKs7ulgUO7HIZIH1UsA3QmnK2551GI"/>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface">Marcus Chen</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">m.chen@techflow.io</p>
+<div class="mt-md flex gap-sm">
+<button class="px-md py-xs border border-outline-variant rounded bg-surface-container-lowest font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors">Message</button>
+<button class="px-md py-xs border border-outline-variant rounded bg-surface-container-lowest font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">edit</span> Edit
+                                </button>
+</div>
+</div>
+</div>
+<!-- Stats Row -->
+<div class="grid grid-cols-2 divide-x divide-outline-variant border-b border-outline-variant bg-surface-container-lowest">
+<div class="p-md text-center">
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-xs">LTV</div>
+<div class="font-h2 text-h2 text-on-surface">$14,205</div>
+</div>
+<div class="p-md text-center">
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-xs">Avg Order</div>
+<div class="font-h2 text-h2 text-on-surface">$163</div>
+</div>
+</div>
+<!-- Tx History Header -->
+<div class="px-md py-sm bg-surface-container-low border-b border-outline-variant flex items-center justify-between">
+<h4 class="font-label-md text-label-md text-on-surface flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+                            Tx History Per user
+                        </h4>
+<a class="font-label-sm text-label-sm text-secondary hover:underline" href="#">View All</a>
+</div>
+<!-- Tx List -->
+<div class="flex-1 overflow-y-auto">
+<ul class="divide-y divide-outline-variant">
+<li class="p-md hover:bg-surface-container-lowest transition-colors flex items-center justify-between">
+<div class="flex items-start gap-md">
+<div class="w-10 h-10 rounded bg-surface-variant flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">inventory</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Order #ORD-8821</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Enterprise Server Rack</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-xs">Oct 24, 2023</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-label-md text-label-md text-on-surface">$2,450.00</div>
+<div class="font-label-sm text-label-sm text-primary mt-xs">Completed</div>
+</div>
+</li>
+<li class="p-md hover:bg-surface-container-lowest transition-colors flex items-center justify-between bg-surface">
+<div class="flex items-start gap-md">
+<div class="w-10 h-10 rounded bg-surface-variant flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Invoice #INV-4490</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Annual Maintenance Contract</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-xs">Sep 12, 2023</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-label-md text-label-md text-on-surface">$1,200.00</div>
+<div class="font-label-sm text-label-sm text-primary mt-xs">Completed</div>
+</div>
+</li>
+<li class="p-md hover:bg-surface-container-lowest transition-colors flex items-center justify-between">
+<div class="flex items-start gap-md">
+<div class="w-10 h-10 rounded bg-surface-variant flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">inventory</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Order #ORD-8705</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Cisco Networking Gear</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-xs">Aug 05, 2023</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-label-md text-label-md text-on-surface">$4,120.00</div>
+<div class="font-label-sm text-label-sm text-primary mt-xs">Completed</div>
+</div>
+</li>
+<li class="p-md hover:bg-surface-container-lowest transition-colors flex items-center justify-between bg-surface">
+<div class="flex items-start gap-md">
+<div class="w-10 h-10 rounded bg-surface-variant flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-error">assignment_return</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface">Return #RET-092</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Defective Switch Module</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-xs">Jul 18, 2023</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-label-md text-label-md text-on-surface">-$450.00</div>
+<div class="font-label-sm text-label-sm text-error mt-xs">Refunded</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
