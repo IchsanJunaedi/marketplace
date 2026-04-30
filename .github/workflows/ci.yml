@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Lint, Typecheck, Build
+    runs-on: ubuntu-latest
+
+    env:
+      # Build-only placeholder so Prisma & env validation don't fail in CI.
+      DATABASE_URL: "mysql://ci:ci@localhost:3306/ci"
+      AUTH_SECRET: "ci-secret-placeholder-32-chars-aaaa"
+      AUTH_URL: "http://localhost:3000"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
