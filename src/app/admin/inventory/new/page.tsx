@@ -5,6 +5,9 @@ import { listCategories } from "@/lib/products";
 import { createProduct } from "../actions";
 import { ProductForm } from "../product-form";
 
+// Page hits the database on every request — opt out of static prerender.
+export const dynamic = "force-dynamic";
+
 export default async function NewProductPage() {
   const categories = await listCategories();
   return (

@@ -6,6 +6,9 @@ import Link from "next/link";
 import { listStorefrontProducts } from "@/lib/products";
 import { ProductCard } from "./product-card";
 
+// Page hits the database on every request — opt out of static prerender.
+export const dynamic = "force-dynamic";
+
 export default async function Page() {
   const products = await listStorefrontProducts();
   return (

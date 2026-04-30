@@ -5,6 +5,9 @@ import Link from "next/link";
 
 import { listAdminProducts } from "@/lib/products";
 
+// Page hits the database on every request — opt out of static prerender.
+export const dynamic = "force-dynamic";
+
 const fmt = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 });
 
 export default async function Page() {
