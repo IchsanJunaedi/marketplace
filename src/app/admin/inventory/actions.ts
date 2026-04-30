@@ -197,7 +197,24 @@ export async function updateProduct(
 
 export async function deleteProduct(id: string): Promise<void> {
   await requireAdmin();
-  await prisma.product.delete({ where: { id } });
+
+  // Carts are transient — drop any pending CartItems pointing to this product
+  // so we don't trip the FK constraint.
+  await prisma.cartItem.deleteMany({ where: { productId: id } });
+
+  // Order history must be preserved. If the product has been ordered, archive
+  // it instead of hard-deleting (status=ARCHIVED hides it from the storefront
+  // listing while keeping OrderItem references intact).
+  const orderRefs = await prisma.orderItem.count({ where: { productId: id } });
+  if (orderRefs > 0) {
+    await prisma.product.update({
+      where: { id },
+      data: { status: ProductStatus.ARCHIVED },
+    });
+  } else {
+    await prisma.product.delete({ where: { id } });
+  }
+
   revalidatePath("/admin/inventory");
   revalidatePath("/products");
   redirect("/admin/inventory");
