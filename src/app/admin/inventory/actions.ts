@@ -42,8 +42,7 @@ const productSchema = z.object({
     .number()
     .nonnegative()
     .max(100_000_000)
-    .optional()
-    .or(z.literal("")),
+    .optional(),
   stock: z.coerce.number().int().nonnegative().max(1_000_000),
   weightGram: z.coerce.number().int().nonnegative().max(1_000_000).default(0),
   status: z.nativeEnum(ProductStatus).default(ProductStatus.DRAFT),
@@ -64,7 +63,9 @@ function parseForm(formData: FormData) {
     description: formData.get("description") || "",
     categoryId: formData.get("categoryId") || "",
     price: formData.get("price"),
-    compareAt: formData.get("compareAt") || "",
+    // Normalize empty compareAt to undefined so z.coerce.number() doesn't
+    // turn "" into 0 (Number("") === 0). Keeps the field truly optional.
+    compareAt: formData.get("compareAt") || undefined,
     stock: formData.get("stock"),
     weightGram: formData.get("weightGram") || 0,
     status: formData.get("status") || ProductStatus.DRAFT,
@@ -98,9 +99,7 @@ export async function createProduct(
         categoryId: data.categoryId || null,
         price: new Prisma.Decimal(data.price),
         compareAt:
-          data.compareAt === "" || data.compareAt == null
-            ? null
-            : new Prisma.Decimal(data.compareAt),
+          data.compareAt == null ? null : new Prisma.Decimal(data.compareAt),
         stock: data.stock,
         weightGram: data.weightGram,
         status: data.status,
@@ -156,9 +155,7 @@ export async function updateProduct(
         categoryId: data.categoryId || null,
         price: new Prisma.Decimal(data.price),
         compareAt:
-          data.compareAt === "" || data.compareAt == null
-            ? null
-            : new Prisma.Decimal(data.compareAt),
+          data.compareAt == null ? null : new Prisma.Decimal(data.compareAt),
         stock: data.stock,
         weightGram: data.weightGram,
         status: data.status,
