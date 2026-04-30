@@ -23,14 +23,13 @@ export function ProductCard({ product }: { product: ProductListItem }) {
       className="bg-surface-container-lowest border border-surface-variant rounded-DEFAULT overflow-hidden flex flex-col group hover:border-outline transition-colors"
     >
       <div className="h-48 w-full bg-surface-container relative p-4 flex items-center justify-center">
-        {isNew ? (
-          <div className="absolute top-2 left-2 bg-surface-container-lowest text-primary border border-outline-variant px-1.5 py-0.5 rounded-DEFAULT font-label-caps text-label-caps uppercase">
-            New
-          </div>
-        ) : null}
         {isLowStock ? (
           <div className="absolute top-2 left-2 bg-error-container text-on-error-container border border-error-container px-1.5 py-0.5 rounded-DEFAULT font-label-caps text-label-caps uppercase">
             Low Stock
+          </div>
+        ) : isNew ? (
+          <div className="absolute top-2 left-2 bg-surface-container-lowest text-primary border border-outline-variant px-1.5 py-0.5 rounded-DEFAULT font-label-caps text-label-caps uppercase">
+            New
           </div>
         ) : null}
         {product.status === ProductStatus.DRAFT ? (

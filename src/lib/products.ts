@@ -95,8 +95,9 @@ export type ProductDetail = ProductListItem & {
 export async function getProductBySlug(
   slug: string,
 ): Promise<ProductDetail | null> {
-  const p = await prisma.product.findUnique({
-    where: { slug },
+  // Storefront route — only ACTIVE products are visible by slug.
+  const p = await prisma.product.findFirst({
+    where: { slug, status: ProductStatus.ACTIVE },
     select: {
       ...productSelect,
       weightGram: true,
