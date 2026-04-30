@@ -73,7 +73,13 @@
   --radius-xl: 0.5rem;
   --radius-full: 0.75rem;
 
-  /* ---- spacing ---- */
+  /* ---- spacing ----
+     Note: admin tokens (xs/sm/md/lg/xl/xxl) collide with Tailwind v4's
+     default container scale used by `max-w-md`, `max-w-lg`, etc. — Tailwind
+     v4 prefers `--spacing-{key}` over `--container-{key}` when both are
+     defined, so a `max-w-md` left as-is would resolve to `var(--spacing-md)`
+     (= 16px). For the few `max-w-md`/`max-w-lg` usages in the templates we
+     hard-code arbitrary values (`max-w-[28rem]`, `max-w-[32rem]`) instead. */
   --spacing-unit: 4px;
   --spacing-table-cell-padding: 16px;
   --spacing-inline-element-gap: 8px;
