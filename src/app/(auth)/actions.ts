@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
+import { Prisma } from "@/generated/prisma/client";
 
 import { prisma } from "@/lib/db";
 import { signIn } from "@/auth";
@@ -38,16 +39,21 @@ export async function signUp(
 
   const { email, name, password } = parsed.data;
 
-  const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) {
-    return { error: "Email sudah terdaftar." };
-  }
-
   const passwordHash = await bcrypt.hash(password, 10);
 
-  await prisma.user.create({
-    data: { email, name, passwordHash, role: "CUSTOMER" },
-  });
+  try {
+    await prisma.user.create({
+      data: { email, name, passwordHash, role: "CUSTOMER" },
+    });
+  } catch (err) {
+    if (
+      err instanceof Prisma.PrismaClientKnownRequestError &&
+      err.code === "P2002"
+    ) {
+      return { error: "Email sudah terdaftar." };
+    }
+    throw err;
+  }
 
   // Auto sign-in after registration; signIn will throw a redirect.
   await signIn("credentials", {
