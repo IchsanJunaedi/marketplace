@@ -37,14 +37,16 @@ export function ProductForm({
   initial,
   submitLabel,
   cancelHref,
-  extraSlot,
+  deleteAction,
 }: {
   action: ProductFormAction;
   categories: Category[];
   initial: ProductInitial;
   submitLabel: string;
   cancelHref: string;
-  extraSlot?: React.ReactNode;
+  // Optional server action for deleting; rendered as a button with `formAction`
+  // to avoid invalid nested <form> elements.
+  deleteAction?: () => Promise<void>;
 }) {
   const [state, formAction, pending] = useActionState(action, initialState);
 
@@ -220,7 +222,22 @@ export function ProductForm({
           Cancel
         </Link>
         <div className="flex items-center gap-sm">
-          {extraSlot}
+          {deleteAction ? (
+            <button
+              type="submit"
+              formAction={deleteAction}
+              formNoValidate
+              onClick={(e) => {
+                if (!confirm("Hapus produk ini? Tindakan ini tidak bisa dibatalkan.")) {
+                  e.preventDefault();
+                }
+              }}
+              disabled={pending}
+              className="px-md py-sm border border-error text-error rounded font-label-md text-label-md hover:bg-error-container transition-colors disabled:opacity-50"
+            >
+              Delete
+            </button>
+          ) : null}
           <button
             type="submit"
             disabled={pending}

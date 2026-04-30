@@ -60,16 +60,7 @@ export default async function EditProductPage({ params }: Props) {
           status: product.status,
           primaryImageUrl: product.primaryImageUrl ?? "",
         }}
-        extraSlot={
-          <form action={boundDelete}>
-            <button
-              type="submit"
-              className="px-md py-sm border border-error text-error rounded font-label-md text-label-md hover:bg-error-container transition-colors"
-            >
-              Delete
-            </button>
-          </form>
-        }
+        deleteAction={boundDelete}
       />
     </main>
   );
