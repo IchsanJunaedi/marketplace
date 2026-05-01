@@ -68,13 +68,13 @@ function toCartLine(item: RawCartItem): CartLine {
 }
 
 export async function getOrCreateCart(userId: string): Promise<{ id: string }> {
-  const existing = await prisma.cart.findUnique({
+  // upsert is atomic — a find-then-create pair would race on a user's very
+  // first add-to-cart (or a double-click) and crash the second request with
+  // P2002 because Cart.userId is @unique.
+  return prisma.cart.upsert({
     where: { userId },
-    select: { id: true },
-  });
-  if (existing) return existing;
-  return prisma.cart.create({
-    data: { userId },
+    update: {},
+    create: { userId },
     select: { id: true },
   });
 }
