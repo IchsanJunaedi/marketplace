@@ -23,6 +23,14 @@ const quantitySchema = z.coerce.number().int().min(1).max(999);
 const deltaSchema = z.coerce.number().int().min(-999).max(999);
 const itemIdSchema = z.string().min(1);
 
+// Whitelist post-add destinations. The action is a publicly callable endpoint,
+// so we never feed user-supplied URLs into redirect() to avoid open redirects.
+const ALLOWED_REDIRECTS = new Set(["/cart", "/checkout"]);
+function safeRedirect(raw: FormDataEntryValue | null): string {
+  const s = typeof raw === "string" ? raw : "/cart";
+  return ALLOWED_REDIRECTS.has(s) ? s : "/cart";
+}
+
 /**
  * Add a product to the user's cart. Increments quantity if a line for the same
  * product already exists. Always clamps to product.stock so we never persist
@@ -32,7 +40,7 @@ export async function addToCartAction(formData: FormData): Promise<void> {
   const userId = await requireUserId();
   const productId = productIdSchema.parse(formData.get("productId"));
   const quantity = quantitySchema.parse(formData.get("quantity") ?? 1);
-  const redirectTo = String(formData.get("redirectTo") ?? "/cart");
+  const redirectTo = safeRedirect(formData.get("redirectTo"));
 
   const product = await prisma.product.findUnique({
     where: { id: productId },

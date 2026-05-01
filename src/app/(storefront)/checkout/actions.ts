@@ -182,13 +182,20 @@ export async function placeOrderAction(
       });
 
       // Decrement stock atomically per line so concurrent checkouts can't
-      // oversell. We've already validated stock above so a negative update
-      // here implies a race — Prisma will throw and the tx rolls back.
+      // oversell. The earlier snapshot read is only advisory — REPEATABLE READ
+      // lets two transactions both see the same stock value, both pass the
+      // `stock < quantity` check, and both proceed. To prevent that we issue a
+      // conditional UPDATE … WHERE stock >= quantity (no DB CHECK constraint
+      // exists on the column). If `count === 0`, another transaction already
+      // consumed the stock; throw and let the surrounding tx roll back.
       for (const item of cart.items) {
-        await tx.product.update({
-          where: { id: item.product.id },
+        const result = await tx.product.updateMany({
+          where: { id: item.product.id, stock: { gte: item.quantity } },
           data: { stock: { decrement: item.quantity } },
         });
+        if (result.count === 0) {
+          throw new Error(`INSUFFICIENT_STOCK:${item.product.name}`);
+        }
       }
 
       // Empty the cart now that the order is committed.
