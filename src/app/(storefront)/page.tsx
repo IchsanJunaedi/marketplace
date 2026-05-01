@@ -32,7 +32,7 @@ export default function Page() {
 <div className="lg:col-span-5 flex flex-col items-start gap-6 pr-0 lg:pr-8">
 <span className="font-label-caps text-label-caps text-surface-tint uppercase tracking-wider bg-secondary-container px-3 py-1 rounded-sm">B2B Procurement Platform</span>
 <h1 className="font-h1 text-h1 text-on-background leading-tight text-4xl lg:text-5xl">Industrial-grade equipment for the modern enterprise.</h1>
-<p className="font-body-md text-body-md text-on-surface-variant text-lg max-w-lg">Streamline your supply chain with high-performance machinery, bulk materials, and certified components—delivered reliably to your facilities worldwide.</p>
+<p className="font-body-md text-body-md text-on-surface-variant text-lg max-w-[32rem]">Streamline your supply chain with high-performance machinery, bulk materials, and certified components—delivered reliably to your facilities worldwide.</p>
 <div className="flex items-center gap-4 mt-2">
 <button className="bg-primary text-on-primary font-data-tabular text-data-tabular px-6 py-3 rounded hover:bg-surface-tint transition-colors active:scale-95 shadow-sm">
                         Explore Catalog

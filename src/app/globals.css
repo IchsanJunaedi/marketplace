@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
-/* ===== D2C Marketplace design tokens (extracted from template/*) ===== */
+/* ===== D2C Marketplace design tokens =====
+   Auto-generated from template/_themes.json — do not edit by hand.
+   Storefront tokens are the @theme defaults; admin pages wrap content with
+   className="theme-admin" so the overrides below take effect. */
 
 @theme {
+  /* ---- colors ---- */
   --color-on-background: #191c1e;
   --color-surface-variant: #e1e2e4;
   --color-surface-container: #edeef0;
@@ -51,16 +55,46 @@
   --color-surface-container-lowest: #ffffff;
   --color-on-surface: #191c1e;
 
+  /* ---- fontFamily ---- */
+  --font-h2: "Inter", sans-serif;
+  --font-body-md: "Inter", sans-serif;
+  --font-data-tabular: "Inter", sans-serif;
+  --font-label-caps: "Inter", sans-serif;
+  --font-body-sm: "Inter", sans-serif;
+  --font-h1: "Inter", sans-serif;
+  --font-body-lg: "Inter", sans-serif;
+  --font-h3: "Inter", sans-serif;
+  --font-label-sm: "Inter", sans-serif;
+  --font-label-md: "Inter", sans-serif;
+
+  /* ---- borderRadius ---- */
   --radius: 0.125rem;
   --radius-lg: 0.25rem;
   --radius-xl: 0.5rem;
   --radius-full: 0.75rem;
+
+  /* ---- spacing ----
+     Note: admin tokens (xs/sm/md/lg/xl/xxl) collide with Tailwind v4's
+     default container scale used by `max-w-md`, `max-w-lg`, etc. — Tailwind
+     v4 prefers `--spacing-{key}` over `--container-{key}` when both are
+     defined, so a `max-w-md` left as-is would resolve to `var(--spacing-md)`
+     (= 16px). For the few `max-w-md`/`max-w-lg` usages in the templates we
+     hard-code arbitrary values (`max-w-[28rem]`, `max-w-[32rem]`) instead. */
   --spacing-unit: 4px;
-  --spacing-table-cell-padding: 12px 16px;
+  --spacing-table-cell-padding: 16px;
   --spacing-inline-element-gap: 8px;
   --spacing-card-gap: 16px;
   --spacing-container-padding: 24px;
+  --spacing-container-max: 1280px;
+  --spacing-xl: 32px;
+  --spacing-sm: 8px;
+  --spacing-xs: 4px;
+  --spacing-lg: 24px;
+  --spacing-md: 16px;
+  --spacing-gutter: 16px;
+  --spacing-xxl: 48px;
 
+  /* ---- fontSize ---- */
   --text-h2: 18px;
   --text-h2--line-height: 28px;
   --text-h2--font-weight: 600;
@@ -82,71 +116,84 @@
   --text-h1--line-height: 32px;
   --text-h1--font-weight: 600;
   --text-h1--letter-spacing: -0.02em;
-
-  --font-h2: "Inter", sans-serif;
-  --font-body-md: "Inter", sans-serif;
-  --font-data-tabular: "Inter", sans-serif;
-  --font-label-caps: "Inter", sans-serif;
-  --font-body-sm: "Inter", sans-serif;
-  --font-h1: "Inter", sans-serif;
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-lg--font-weight: 400;
+  --text-h3: 20px;
+  --text-h3--line-height: 28px;
+  --text-h3--font-weight: 600;
+  --text-h3--letter-spacing: -0.01em;
+  --text-label-sm: 12px;
+  --text-label-sm--line-height: 16px;
+  --text-label-sm--font-weight: 600;
+  --text-label-md: 14px;
+  --text-label-md--line-height: 20px;
+  --text-label-md--font-weight: 600;
 }
 
-/* ===== Admin theme (green) — applied via <body className="theme-admin"> ===== */
+/* ===== Admin theme overrides (green palette + admin-specific spacing/typography) ===== */
 .theme-admin {
-  --color-surface-container-highest: #d9e3f6;
-  --color-on-primary: #ffffff;
-  --color-on-primary-fixed-variant: #005304;
-  --color-secondary-fixed-dim: #adc6ff;
-  --color-error: #ba1a1a;
-  --color-secondary: #0058bc;
-  --color-on-secondary-container: #fefcff;
-  --color-surface-container-high: #dee9fc;
-  --color-surface-container-low: #eff4ff;
-  --color-on-primary-fixed: #002201;
-  --color-surface-variant: #d9e3f6;
   --color-on-background: #121c2a;
-  --color-error-container: #ffdad6;
+  --color-surface-variant: #d9e3f6;
+  --color-surface-container: #e6eeff;
+  --color-inverse-on-surface: #eaf1ff;
+  --color-outline: #6d7b67;
   --color-tertiary-fixed: #ffd9e2;
   --color-primary-fixed-dim: #56e24b;
-  --color-inverse-on-surface: #eaf1ff;
-  --color-surface-container: #e6eeff;
-  --color-outline: #6d7b67;
-  --color-outline-variant: #bccbb4;
-  --color-on-tertiary: #ffffff;
   --color-on-primary-container: #003402;
+  --color-outline-variant: #bccbb4;
+  --color-on-primary-fixed-variant: #005304;
+  --color-secondary-fixed-dim: #adc6ff;
+  --color-secondary: #0058bc;
+  --color-surface-container-highest: #d9e3f6;
+  --color-on-secondary-container: #fefcff;
+  --color-surface-container-high: #dee9fc;
+  --color-on-primary-fixed: #002201;
+  --color-surface-container-low: #eff4ff;
+  --color-surface-tint: #006e08;
+  --color-secondary-container: #0070eb;
+  --color-on-tertiary-fixed-variant: #8e004a;
+  --color-on-secondary-fixed-variant: #004493;
+  --color-tertiary: #b80963;
+  --color-surface-bright: #f8f9ff;
+  --color-tertiary-container: #fe4e97;
+  --color-surface-dim: #d0dbed;
+  --color-primary: #006e08;
+  --color-secondary-fixed: #d8e2ff;
+  --color-background: #f8f9ff;
+  --color-surface: #f8f9ff;
+  --color-inverse-primary: #56e24b;
+  --color-on-surface-variant: #3e4a39;
   --color-on-tertiary-fixed: #3e001d;
   --color-tertiary-fixed-dim: #ffb1c8;
-  --color-on-secondary: #ffffff;
-  --color-on-surface-variant: #3e4a39;
   --color-on-tertiary-container: #5b002d;
   --color-primary-fixed: #76ff66;
   --color-primary-container: #00aa13;
   --color-inverse-surface: #27313f;
   --color-on-secondary-fixed: #001a41;
-  --color-surface-container-lowest: #ffffff;
   --color-on-surface: #121c2a;
-  --color-on-error: #ffffff;
-  --color-on-tertiary-fixed-variant: #8e004a;
-  --color-secondary-container: #0070eb;
-  --color-surface-tint: #006e08;
-  --color-surface-bright: #f8f9ff;
-  --color-tertiary-container: #fe4e97;
-  --color-on-error-container: #93000a;
-  --color-on-secondary-fixed-variant: #004493;
-  --color-tertiary: #b80963;
-  --color-surface: #f8f9ff;
-  --color-inverse-primary: #56e24b;
-  --color-surface-dim: #d0dbed;
-  --color-primary: #006e08;
-  --color-secondary-fixed: #d8e2ff;
-  --color-background: #f8f9ff;
+  --spacing-unit: 8px;
+  --text-h2: 24px;
+  --text-h2--line-height: 32px;
+  --text-h2--font-weight: 700;
+  --text-h2--letter-spacing: -0.01em;
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-body-md--font-weight: 400;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 20px;
+  --text-body-sm--font-weight: 400;
+  --text-h1: 32px;
+  --text-h1--line-height: 40px;
+  --text-h1--font-weight: 700;
+  --text-h1--letter-spacing: -0.02em;
 }
 
 body {
   font-family: "Inter", sans-serif;
 }
 
-/* Material Symbols Outlined utility (icons used across templates) */
+/* Material Symbols Outlined (icons used across templates) */
 .material-symbols-outlined {
   font-family: "Material Symbols Outlined";
   font-weight: normal;

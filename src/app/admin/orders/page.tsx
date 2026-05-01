@@ -41,7 +41,7 @@ export default function Page() {
 {/*  Search Bar (on_left)  */}
 <div className="flex-1 flex items-center">
 <div className="text-xl font-bold text-green-600 dark:text-green-500 mr-8 lg:hidden">AdminPanel</div>
-<div className="relative w-full max-w-md">
+<div className="relative w-full max-w-[28rem]">
 <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">search</span>
 <input className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent bg-gray-50 text-on-surface" placeholder="Search orders..." type="text" />
 </div>
