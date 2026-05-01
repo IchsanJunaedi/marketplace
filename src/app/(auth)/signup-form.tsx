@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 
 import { signUp, type SignUpState } from "./actions";
+import { GoogleSignInButton } from "./google-signin-button";
 
 const initial: SignUpState = {};
 
@@ -10,6 +11,7 @@ export function SignUpForm() {
   const [state, formAction, pending] = useActionState(signUp, initial);
 
   return (
+    <>
     <form action={formAction} className="flex flex-col gap-4">
       <label className="flex flex-col gap-1">
         <span className="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">
@@ -86,5 +88,18 @@ export function SignUpForm() {
         {pending ? "Memproses..." : "Daftar"}
       </button>
     </form>
+
+    <div className="flex flex-col gap-4 mt-4">
+      <div className="flex items-center gap-4">
+        <hr className="flex-1 border-outline-variant" />
+        <span className="font-label-caps text-label-caps text-on-surface-variant uppercase text-xs">
+          atau
+        </span>
+        <hr className="flex-1 border-outline-variant" />
+      </div>
+
+      <GoogleSignInButton />
+    </div>
+    </>
   );
 }
