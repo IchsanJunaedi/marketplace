@@ -50,7 +50,10 @@ function generateOrderNumber(): string {
   const yyyy = now.getUTCFullYear();
   const mm = String(now.getUTCMonth() + 1).padStart(2, "0");
   const dd = String(now.getUTCDate()).padStart(2, "0");
-  const rand = Math.random().toString(36).slice(2, 7).toUpperCase();
+  // randomUUID gives ~32 bits of entropy in the slice — collision probability
+  // is negligible at any realistic order volume per day, vs ~36^5 (~60M) when
+  // using Math.random() base36 which would start to collide on heavy days.
+  const rand = crypto.randomUUID().replace(/-/g, "").slice(0, 8).toUpperCase();
   return `ORD-${yyyy}${mm}${dd}-${rand}`;
 }
 

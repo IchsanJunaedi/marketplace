@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-import { ProductStatus } from "@/generated/prisma/client";
+import { Prisma, ProductStatus } from "@/generated/prisma/client";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { getOrCreateCart } from "@/lib/cart";
@@ -54,23 +54,37 @@ export async function addToCartAction(formData: FormData): Promise<void> {
   }
 
   const cart = await getOrCreateCart(userId);
-  const existing = await prisma.cartItem.findUnique({
-    where: { cartId_productId: { cartId: cart.id, productId } },
-    select: { id: true, quantity: true },
-  });
 
-  const desired = (existing?.quantity ?? 0) + quantity;
-  const finalQty = Math.min(desired, product.stock);
-
-  if (existing) {
-    await prisma.cartItem.update({
-      where: { id: existing.id },
-      data: { quantity: finalQty },
+  // (cartId, productId) is @@unique, so a parallel first-add for the same
+  // product (double-click, multi-tab) can race: both reads see no row and
+  // both try to create. Catch P2002 and fall back to incrementing the row
+  // the other request just inserted. We cap the loop so a buggy state can
+  // never spin forever.
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const existing = await prisma.cartItem.findUnique({
+      where: { cartId_productId: { cartId: cart.id, productId } },
+      select: { id: true, quantity: true },
     });
-  } else {
-    await prisma.cartItem.create({
-      data: { cartId: cart.id, productId, quantity: finalQty },
-    });
+    const desired = (existing?.quantity ?? 0) + quantity;
+    const finalQty = Math.min(desired, product.stock);
+    try {
+      if (existing) {
+        await prisma.cartItem.update({
+          where: { id: existing.id },
+          data: { quantity: finalQty },
+        });
+      } else {
+        await prisma.cartItem.create({
+          data: { cartId: cart.id, productId, quantity: finalQty },
+        });
+      }
+      break;
+    } catch (err) {
+      const isUniqueViolation =
+        err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002";
+      if (isUniqueViolation && attempt < 2) continue;
+      throw err;
+    }
   }
 
   revalidatePath("/cart");
