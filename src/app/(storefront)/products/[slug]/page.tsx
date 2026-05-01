@@ -3,6 +3,7 @@
 // To re-run conversion: python3 /tmp/portscript/html2tsx.py
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/lib/products";
+import { AddToCartForm } from "@/app/(storefront)/products/add-to-cart-form";
 
 const fmt = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -100,30 +101,7 @@ export default async function Page({ params }: Props) {
 {product.description ?? "Belum ada deskripsi untuk produk ini."}
 </p>
 </div>
-<div className="flex flex-col gap-4 mt-4">
-<div className="flex items-center gap-4">
-<label className="font-data-tabular text-data-tabular text-on-surface w-16">Qty</label>
-<div className="flex items-center border border-outline-variant rounded-lg overflow-hidden h-10 w-32">
-<button className="w-10 h-full flex items-center justify-center bg-surface-container-low hover:bg-surface-container text-on-surface transition-colors">
-<span className="material-symbols-outlined text-[18px]">remove</span>
-</button>
-<input className="w-full h-full text-center border-none bg-surface-container-lowest font-data-tabular text-data-tabular text-on-surface focus:ring-0 p-0" type="text" value="1" />
-<button className="w-10 h-full flex items-center justify-center bg-surface-container-low hover:bg-surface-container text-on-surface transition-colors">
-<span className="material-symbols-outlined text-[18px]">add</span>
-</button>
-</div>
-</div>
-<div className="flex flex-col gap-3 mt-2">
-<button className="w-full bg-primary text-on-primary font-body-md text-body-md font-medium h-12 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-sm">
-<span className="material-symbols-outlined text-[20px]">shopping_cart</span>
-                            Add to cart
-                        </button>
-<button className="w-full border border-outline text-on-surface font-body-md text-body-md font-medium h-12 rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-low transition-colors">
-<span className="material-symbols-outlined text-[20px]">bolt</span>
-                            Buy now
-                        </button>
-</div>
-</div>
+<AddToCartForm productId={product.id} stock={product.stock} />
 <div className="flex items-center justify-center gap-6 mt-4 text-on-surface-variant font-body-sm text-body-sm">
 <div className="flex items-center gap-1">
 <span className="material-symbols-outlined text-[16px]">local_shipping</span>

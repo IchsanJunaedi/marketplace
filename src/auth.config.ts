@@ -25,8 +25,12 @@ export const authConfig = {
         return isLoggedIn && role === "ADMIN";
       }
 
-      // /account requires login.
-      if (path.startsWith("/account") || path.startsWith("/checkout")) {
+      // /account, /cart, /checkout all require a logged-in user.
+      if (
+        path.startsWith("/account") ||
+        path.startsWith("/cart") ||
+        path.startsWith("/checkout")
+      ) {
         return isLoggedIn;
       }
 
