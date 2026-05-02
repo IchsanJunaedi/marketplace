@@ -181,7 +181,11 @@ export default async function AccountPage({
                                 key={order.id}
                                 className="border-b border-surface-variant hover:bg-surface-container-low transition-colors"
                               >
-                                <td className="px-6 py-4 font-medium">#{order.orderNumber}</td>
+                                <td className="px-6 py-4 font-medium">
+                                  <Link href={`/account/orders/${order.id}`} className="text-primary hover:underline">
+                                    #{order.orderNumber}
+                                  </Link>
+                                </td>
                                 <td className="px-6 py-4 text-on-surface-variant">
                                   {order.createdAt.toLocaleDateString()}
                                 </td>
