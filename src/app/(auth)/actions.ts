@@ -92,3 +92,7 @@ export async function signOutAction() {
   await signOut({ redirectTo: "/" });
   redirect("/");
 }
+
+export async function signInWithGoogleAction(redirectTo?: string) {
+  await signIn("google", { redirectTo: redirectTo || "/account" });
+}

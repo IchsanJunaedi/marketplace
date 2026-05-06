@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 
 import { signInAction, type SignInState } from "./actions";
+import { GoogleSignInButton } from "./google-signin-button";
 
 const initial: SignInState = {};
 
@@ -10,6 +11,7 @@ export function SignInForm({ redirectTo }: { redirectTo?: string }) {
   const [state, formAction, pending] = useActionState(signInAction, initial);
 
   return (
+    <>
     <form action={formAction} className="flex flex-col gap-4">
       <input type="hidden" name="redirectTo" value={redirectTo ?? "/account"} />
 
@@ -57,5 +59,18 @@ export function SignInForm({ redirectTo }: { redirectTo?: string }) {
         {pending ? "Memproses..." : "Masuk"}
       </button>
     </form>
+
+    <div className="flex flex-col gap-4 mt-4">
+      <div className="flex items-center gap-4">
+        <hr className="flex-1 border-outline-variant" />
+        <span className="font-label-caps text-label-caps text-on-surface-variant uppercase text-xs">
+          atau
+        </span>
+        <hr className="flex-1 border-outline-variant" />
+      </div>
+
+      <GoogleSignInButton redirectTo={redirectTo} />
+    </div>
+    </>
   );
 }

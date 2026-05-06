@@ -1,209 +1,108 @@
-/* eslint-disable @next/next/no-img-element, react/no-unescaped-entities */
-// Originally ported from template/order_management/code.html — design preserved
-// 1:1; bindings replaced with live data from Prisma.
-import { listAdminOrders } from "@/lib/orders";
+import { prisma } from "@/lib/db";
+import { formatIDR } from "@/lib/utils";
+import { OrderStatus } from "@/generated/prisma/client";
+import { updateOrderStatus } from "./actions";
 
-const fmt = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  minimumFractionDigits: 2,
-});
+export default async function AdminOrdersPage() {
+  const orders = await prisma.order.findMany({
+    include: {
+      user: {
+        select: {
+          name: true,
+          email: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
-const dateFmt = new Intl.DateTimeFormat("en-US", {
-  year: "numeric",
-  month: "short",
-  day: "2-digit",
-});
-
-const STATUS_BADGE_CLS: Record<string, string> = {
-  PENDING_PAYMENT: "bg-surface-container text-on-surface",
-  PAID: "bg-secondary-container text-on-secondary-container",
-  PROCESSING: "bg-surface-container text-on-surface",
-  SHIPPED: "bg-primary-container/20 text-primary",
-  DELIVERED: "bg-secondary-container text-on-secondary-container",
-  CANCELLED: "bg-error-container text-on-error-container",
-  EXPIRED: "bg-surface-container text-on-surface-variant",
-  REFUNDED: "bg-surface-container text-on-surface-variant",
-};
-
-export const dynamic = "force-dynamic";
-
-export default async function Page() {
-  const orders = await listAdminOrders();
   return (
-    <div className={`theme-admin bg-background text-on-background font-body-md antialiased flex h-screen overflow-hidden`}>
-{/*  SideNavBar (Shared Component)  */}
-<nav className="bg-white dark:bg-gray-900 h-screen w-64 fixed left-0 top-0 z-50 border-r border-gray-200 dark:border-gray-800 flex flex-col py-4 space-y-1">
-<div className="text-lg font-black tracking-tight text-gray-900 dark:text-white px-6 py-4 mb-4">
-<div className="font-h3 text-h3 text-primary">AdminConsole</div>
-<div className="font-label-sm text-label-sm text-on-surface-variant opacity-70">Enterprise Suite</div>
-</div>
-<div className="flex-1 px-3 space-y-1">
-<a className="font-sans text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-150 ease-in-out flex items-center px-3 py-2 rounded-lg" href="#">
-<span className="material-symbols-outlined mr-3 text-[20px]" data-icon="dashboard">dashboard</span>
-                Overview
-            </a>
-<a className="font-sans text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-150 ease-in-out flex items-center px-3 py-2 rounded-lg" href="#">
-<span className="material-symbols-outlined mr-3 text-[20px]" data-icon="inventory_2">inventory_2</span>
-                Inventory
-            </a>
-{/*  Active Tab  */}
-<a className="font-sans text-sm font-medium bg-gray-100 dark:bg-gray-800 text-green-600 dark:text-green-400 border-r-4 border-green-600 flex items-center px-3 py-2 rounded-lg transition-all duration-150 ease-in-out" href="#">
-<span className="material-symbols-outlined mr-3 text-[20px]" data-icon="shopping_cart" style={{ fontVariationSettings: "'FILL' 1" }}>shopping_cart</span>
-                Orders
-            </a>
-<a className="font-sans text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-150 ease-in-out flex items-center px-3 py-2 rounded-lg" href="#">
-<span className="material-symbols-outlined mr-3 text-[20px]" data-icon="group">group</span>
-                Customers
-            </a>
-<a className="font-sans text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-150 ease-in-out flex items-center px-3 py-2 rounded-lg" href="#">
-<span className="material-symbols-outlined mr-3 text-[20px]" data-icon="settings">settings</span>
-                Settings
-            </a>
-</div>
-</nav>
-{/*  Main Content Wrapper  */}
-<div className="flex-1 flex flex-col ml-64 min-w-0">
-{/*  TopAppBar (Shared Component)  */}
-<header className="bg-white dark:bg-gray-900 docked full-width top-0 z-40 border-b border-gray-200 dark:border-gray-800 transition-colors duration-200 flex items-center justify-between px-6 h-16 w-full sticky">
-{/*  Search Bar (on_left)  */}
-<div className="flex-1 flex items-center">
-<div className="text-xl font-bold text-green-600 dark:text-green-500 mr-8 lg:hidden">AdminPanel</div>
-<div className="relative w-full max-w-[28rem]">
-<span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">search</span>
-<input className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent bg-gray-50 text-on-surface" placeholder="Search orders..." type="text" />
-</div>
-</div>
-{/*  Trailing Icons  */}
-<div className="flex items-center space-x-4">
-<button className="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors duration-200">
-<span className="material-symbols-outlined" data-icon="notifications">notifications</span>
-</button>
-<button className="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors duration-200">
-<span className="material-symbols-outlined" data-icon="help">help</span>
-</button>
-<button className="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-colors duration-200">
-<span className="material-symbols-outlined" data-icon="account_circle">account_circle</span>
-</button>
-</div>
-</header>
-{/*  Main Canvas  */}
-<main className="flex-1 overflow-y-auto p-6 bg-background">
-<div className="max-w-container-max mx-auto space-y-6">
-{/*  Page Header  */}
-<div className="flex items-center justify-between">
-<div>
-<h1 className="font-h2 text-h2 text-on-surface">Order List &amp; Filter</h1>
-<p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Manage, filter, and process enterprise orders.</p>
-</div>
-<div className="flex gap-3">
-<button className="px-4 py-2 bg-surface-container-lowest border border-outline-variant rounded text-on-surface font-label-md text-label-md hover:bg-surface-variant transition-colors flex items-center gap-2">
-<span className="material-symbols-outlined text-[18px]">download</span> Export
-                        </button>
-<button className="px-4 py-2 bg-primary-container text-on-primary rounded font-label-md text-label-md hover:bg-primary transition-colors flex items-center gap-2">
-<span className="material-symbols-outlined text-[18px]">add</span> Create Order
-                        </button>
-</div>
-</div>
-{/*  Filters & Table Section  */}
-<div className="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col">
-{/*  Filters Bar  */}
-<div className="p-4 border-b border-outline-variant bg-surface-bright flex flex-wrap gap-4 items-end">
-<div className="flex-1 min-w-[200px]">
-<label className="block font-label-sm text-label-sm text-on-surface-variant mb-1">Status</label>
-<select className="w-full border border-outline-variant rounded px-3 py-2 font-body-sm text-body-sm focus:ring-2 focus:ring-secondary focus:border-secondary outline-none">
-<option>All Statuses</option>
-<option>Processing</option>
-<option>Shipped</option>
-<option>Delivered</option>
-</select>
-</div>
-<div className="flex-1 min-w-[200px]">
-<label className="block font-label-sm text-label-sm text-on-surface-variant mb-1">Date Range</label>
-<input className="w-full border border-outline-variant rounded px-3 py-2 font-body-sm text-body-sm focus:ring-2 focus:ring-secondary outline-none text-on-surface" type="date" />
-</div>
-<div className="flex-1 min-w-[200px]">
-<label className="block font-label-sm text-label-sm text-on-surface-variant mb-1">Customer / ID</label>
-<input className="w-full border border-outline-variant rounded px-3 py-2 font-body-sm text-body-sm focus:ring-2 focus:ring-secondary outline-none" placeholder="Search..." type="text" />
-</div>
-<div>
-<button className="px-4 py-2 bg-surface-container border border-outline-variant rounded font-label-md text-label-md text-on-surface hover:bg-surface-variant transition-colors">
-                                Apply Filters
-                            </button>
-</div>
-</div>
-{/*  Data Table  */}
-<div className="overflow-x-auto">
-<table className="w-full text-left border-collapse">
-<thead>
-<tr className="border-b border-outline-variant bg-surface-bright">
-<th className="px-6 py-3 font-label-md text-label-md text-on-surface-variant font-semibold">Order ID</th>
-<th className="px-6 py-3 font-label-md text-label-md text-on-surface-variant font-semibold">Date</th>
-<th className="px-6 py-3 font-label-md text-label-md text-on-surface-variant font-semibold">Customer</th>
-<th className="px-6 py-3 font-label-md text-label-md text-on-surface-variant font-semibold">Status</th>
-<th className="px-6 py-3 font-label-md text-label-md text-on-surface-variant font-semibold text-right">Amount</th>
-<th className="px-6 py-3 font-label-md text-label-md text-on-surface-variant font-semibold text-center">Actions</th>
-</tr>
-</thead>
-<tbody className="divide-y divide-outline-variant">
-{orders.length === 0 ? (
-<tr>
-<td className="px-6 py-8 text-center font-body-sm text-body-sm text-on-surface-variant" colSpan={6}>
-  Belum ada order. Order baru akan muncul di sini setelah customer checkout.
-</td>
-</tr>
-) : (
-orders.map((order) => (
-<tr key={order.id} className="hover:bg-surface-container-lowest transition-colors group">
-<td className="px-6 py-4 font-body-sm text-body-sm text-on-surface font-medium">#{order.orderNumber}</td>
-<td className="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">{dateFmt.format(order.createdAt)}</td>
-<td className="px-6 py-4 font-body-sm text-body-sm text-on-surface">{order.customerName ?? order.customerEmail}</td>
-<td className="px-6 py-4">
-<span className={`inline-flex items-center px-2 py-1 rounded font-label-sm text-label-sm tracking-wide ${STATUS_BADGE_CLS[order.status] ?? "bg-surface-container text-on-surface"}`}>{order.status.replace("_", " ")}</span>
-</td>
-<td className="px-6 py-4 font-body-sm text-body-sm text-on-surface font-medium text-right">{fmt.format(order.total)}</td>
-<td className="px-6 py-4 text-center">
-<span className="inline-flex items-center gap-1 px-3 py-1.5 border border-outline-variant rounded bg-surface-container-lowest text-secondary font-label-sm text-label-sm">
-<span className="material-symbols-outlined text-[16px]">inventory_2</span> {order.itemCount} {order.itemCount === 1 ? "item" : "items"}
-</span>
-</td>
-</tr>
-))
-)}
-</tbody>
-</table>
-</div>
-{/*  Pagination (Simplified)  */}
-<div className="p-4 border-t border-outline-variant flex justify-between items-center bg-surface-bright">
-<span className="font-body-sm text-body-sm text-on-surface-variant">Showing 1 to 10 of 250 entries</span>
-<div className="flex gap-2">
-<button className="px-3 py-1 border border-outline-variant rounded text-on-surface hover:bg-surface-variant font-label-sm text-label-sm">Prev</button>
-<button className="px-3 py-1 border border-outline-variant rounded text-on-surface hover:bg-surface-variant font-label-sm text-label-sm">Next</button>
-</div>
-</div>
-</div>
-{/*  Webhook Details Log (Data Dense layout element)  */}
-<div className="bg-surface-container-lowest border border-outline-variant rounded-lg p-6">
-<h3 className="font-h3 text-h3 text-on-surface mb-4 flex items-center gap-2">
-<span className="material-symbols-outlined text-[20px] text-secondary">code</span> tx details webhook log
-                    </h3>
-<div className="bg-surface border border-outline-variant rounded p-4 font-mono text-sm overflow-x-auto text-on-surface-variant">
-<pre><code>&#123;
-  "event": "order.status_updated",
-  "timestamp": "2023-10-24T14:32:01Z",
-  "data": &#123;
-    "order_id": "ORD-99382",
-    "previous_status": "PENDING",
-    "current_status": "PROCESSING",
-    "tx_ref": "tx_req_88f92a1b",
-    "amount_authorized": 425000
-  &#125;
-&#125;</code></pre>
-</div>
-</div>
-</div>
-</main>
-</div>
-    </div>
+    <>
+      <div className="flex items-center justify-between mb-lg">
+        <div>
+          <h1 className="font-h2 text-h2 text-on-surface">Order Management</h1>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Manage, filter, and process enterprise orders.</p>
+        </div>
+        <div className="flex gap-3">
+          <button className="px-4 py-2 bg-surface-container-lowest border border-outline-variant rounded text-on-surface font-label-md text-label-md hover:bg-surface-variant transition-colors flex items-center gap-2">
+            <span className="material-symbols-outlined text-[18px]">download</span> Export
+          </button>
+        </div>
+      </div>
+
+      <div className="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-outline-variant bg-surface-bright">
+                <th className="px-6 py-3 font-label-md text-label-md text-on-surface-variant font-semibold">Order #</th>
+                <th className="px-6 py-3 font-label-md text-label-md text-on-surface-variant font-semibold">Date</th>
+                <th className="px-6 py-3 font-label-md text-label-md text-on-surface-variant font-semibold">Customer</th>
+                <th className="px-6 py-3 font-label-md text-label-md text-on-surface-variant font-semibold">Status</th>
+                <th className="px-6 py-3 font-label-md text-label-md text-on-surface-variant font-semibold text-right">Amount</th>
+                <th className="px-6 py-3 font-label-md text-label-md text-on-surface-variant font-semibold text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-outline-variant">
+              {orders.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-8 text-center text-on-surface-variant italic">No orders found.</td>
+                </tr>
+              ) : (
+                orders.map((order) => (
+                  <tr key={order.id} className="hover:bg-surface-container-lowest transition-colors group">
+                    <td className="px-6 py-4 font-body-sm text-body-sm text-on-surface font-medium">#{order.orderNumber}</td>
+                    <td className="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">
+                      {order.createdAt.toLocaleDateString("id-ID")}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="font-body-sm text-body-sm text-on-surface font-medium">{order.user.name || "Guest"}</div>
+                      <div className="font-label-sm text-[11px] text-on-surface-variant">{order.user.email}</div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <form action={async (formData) => {
+                        "use server";
+                        const status = formData.get("status") as OrderStatus;
+                        await updateOrderStatus(order.id, status);
+                      }}>
+                        <select 
+                          name="status"
+                          defaultValue={order.status}
+                          className={`px-2 py-1 rounded text-[11px] font-bold uppercase tracking-wide border-none focus:ring-2 focus:ring-primary outline-none ${
+                            order.status === OrderStatus.PAID || order.status === OrderStatus.DELIVERED || order.status === OrderStatus.SHIPPED
+                              ? "bg-primary-container/20 text-primary" 
+                              : order.status === OrderStatus.CANCELLED || order.status === OrderStatus.EXPIRED
+                              ? "bg-error-container/50 text-error"
+                              : "bg-surface-container-high text-on-surface"
+                          }`}
+                          onInput={(e) => e.currentTarget.form?.requestSubmit()}
+                        >
+                          {Object.values(OrderStatus).map((status) => (
+                            <option key={status} value={status}>{status}</option>
+                          ))}
+                        </select>
+                      </form>
+                    </td>
+                    <td className="px-6 py-4 font-body-sm text-body-sm text-on-surface font-medium text-right">
+                      {formatIDR(order.total.toNumber())}
+                    </td>
+                    <td className="px-6 py-4 text-center">
+                      <button className="inline-flex items-center gap-1 px-3 py-1.5 border border-outline-variant rounded bg-surface-container-lowest hover:bg-surface text-secondary font-label-sm text-label-sm transition-colors">
+                        <span className="material-symbols-outlined text-[16px]">visibility</span> Details
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+        <div className="p-4 border-t border-outline-variant flex justify-between items-center bg-surface-bright">
+          <span className="font-body-sm text-body-sm text-on-surface-variant">Showing {orders.length} entries</span>
+        </div>
+      </div>
+    </>
   );
 }
