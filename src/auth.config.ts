@@ -25,8 +25,12 @@ export const authConfig = {
         return isLoggedIn && role === "ADMIN";
       }
 
-      // /account requires login.
-      if (path.startsWith("/account") || path.startsWith("/checkout")) {
+      // /account, /cart, /checkout all require a logged-in user.
+      if (
+        path.startsWith("/account") ||
+        path.startsWith("/cart") ||
+        path.startsWith("/checkout")
+      ) {
         return isLoggedIn;
       }
 
@@ -43,6 +47,7 @@ export const authConfig = {
       if (user) {
         token.id = user.id;
         token.role = (user as { role?: "CUSTOMER" | "ADMIN" }).role ?? "CUSTOMER";
+        token.isWholesale = (user as { isWholesale?: boolean }).isWholesale ?? false;
       }
       return token;
     },
@@ -51,6 +56,8 @@ export const authConfig = {
         session.user.id = token.id as string;
         (session.user as { role?: "CUSTOMER" | "ADMIN" }).role =
           (token.role as "CUSTOMER" | "ADMIN") ?? "CUSTOMER";
+        (session.user as { isWholesale?: boolean }).isWholesale = 
+          token.isWholesale as boolean;
       }
       return session;
     },
