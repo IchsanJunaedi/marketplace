@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import { formatIDR } from "@/lib/utils";
 import { auth } from "@/auth";
 import { notFound } from "next/navigation";
-import { submitReview } from "./actions";
+import { submitReview } from "@/lib/reviews";
 import ReviewForm from "./ReviewForm";
 
 export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
@@ -121,7 +121,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
             {/* Review Form */}
             <div className="lg:col-span-4">
               {userCanReview ? (
-                <ReviewForm productId={product.id} />
+                <ReviewForm productId={product.id} onSubmit={submitReview} />
               ) : (
                 <div className="bg-surface-container-low border border-surface-variant rounded-xl p-6 text-sm text-on-surface-variant italic">
                   {session?.user 

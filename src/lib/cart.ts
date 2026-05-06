@@ -7,7 +7,7 @@ import { prisma } from "@/lib/db";
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
-async function getOrCreateCart(userId: string) {
+export async function getOrCreateCart(userId: string) {
   const existing = await prisma.cart.findUnique({ where: { userId } });
   if (existing) return existing;
   return prisma.cart.create({ data: { userId } });

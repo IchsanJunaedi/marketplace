@@ -36,23 +36,6 @@ export async function updateOrderStatus(orderId: string, status: OrderStatus) {
     return { success: true };
   } catch (error) {
     console.error("Failed to update order status:", error);
-    return { success: false, error: "Failed to update order status" };
-  }
-}
-
-export async function updateTrackingNumber(orderId: string, trackingNumber: string) {
-  try {
-    await prisma.order.update({
-      where: { id: orderId },
-      data: { 
-        trackingNumber,
-        status: OrderStatus.SHIPPED // Auto set to SHIPPED when tracking number is added if needed
-      },
-    });
-    revalidatePath("/admin/orders");
-    return { success: true };
-  } catch (error) {
-    console.error("Failed to update tracking number:", error);
-    return { success: false, error: "Failed to update tracking number" };
+    return { error: "Failed to update status." };
   }
 }

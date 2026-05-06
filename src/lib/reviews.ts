@@ -1,9 +1,10 @@
+"use server";
+
 import { prisma } from "@/lib/db";
 import { auth } from "@/auth";
-// import { revalidatePath } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export async function submitReview(formData: FormData) {
-  "use server";
   const session = await auth();
   if (!session?.user) return { error: "You must be logged in to leave a review." };
 
@@ -43,7 +44,7 @@ export async function submitReview(formData: FormData) {
       },
     });
 
-    // revalidatePath(`/products/${productId}`); // This might need slug instead
+    // revalidatePath(`/products/${productId}`); 
     return { success: true };
   } catch (error) {
     console.error("Failed to submit review:", error);

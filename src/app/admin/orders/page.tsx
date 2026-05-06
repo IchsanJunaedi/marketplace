@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/db";
 import { formatIDR } from "@/lib/utils";
 import { OrderStatus } from "@/generated/prisma/client";
-import { updateOrderStatus } from "./actions";
+import OrderStatusSelect from "./OrderStatusSelect";
+import { updateOrderStatus } from "@/lib/actions/orders";
 
 export default async function AdminOrdersPage() {
   const orders = await prisma.order.findMany({
@@ -62,28 +63,11 @@ export default async function AdminOrdersPage() {
                       <div className="font-label-sm text-[11px] text-on-surface-variant">{order.user.email}</div>
                     </td>
                     <td className="px-6 py-4">
-                      <form action={async (formData) => {
-                        "use server";
-                        const status = formData.get("status") as OrderStatus;
-                        await updateOrderStatus(order.id, status);
-                      }}>
-                        <select 
-                          name="status"
-                          defaultValue={order.status}
-                          className={`px-2 py-1 rounded text-[11px] font-bold uppercase tracking-wide border-none focus:ring-2 focus:ring-primary outline-none ${
-                            order.status === OrderStatus.PAID || order.status === OrderStatus.DELIVERED || order.status === OrderStatus.SHIPPED
-                              ? "bg-primary-container/20 text-primary" 
-                              : order.status === OrderStatus.CANCELLED || order.status === OrderStatus.EXPIRED
-                              ? "bg-error-container/50 text-error"
-                              : "bg-surface-container-high text-on-surface"
-                          }`}
-                          onInput={(e) => e.currentTarget.form?.requestSubmit()}
-                        >
-                          {Object.values(OrderStatus).map((status) => (
-                            <option key={status} value={status}>{status}</option>
-                          ))}
-                        </select>
-                      </form>
+                      <OrderStatusSelect 
+                        orderId={order.id} 
+                        initialStatus={order.status} 
+                        onUpdate={updateOrderStatus}
+                      />
                     </td>
                     <td className="px-6 py-4 font-body-sm text-body-sm text-on-surface font-medium text-right">
                       {formatIDR(order.total.toNumber())}
