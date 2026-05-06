@@ -43,6 +43,7 @@ export const authConfig = {
       if (user) {
         token.id = user.id;
         token.role = (user as { role?: "CUSTOMER" | "ADMIN" }).role ?? "CUSTOMER";
+        token.isWholesale = (user as { isWholesale?: boolean }).isWholesale ?? false;
       }
       return token;
     },
@@ -51,6 +52,8 @@ export const authConfig = {
         session.user.id = token.id as string;
         (session.user as { role?: "CUSTOMER" | "ADMIN" }).role =
           (token.role as "CUSTOMER" | "ADMIN") ?? "CUSTOMER";
+        (session.user as { isWholesale?: boolean }).isWholesale = 
+          token.isWholesale as boolean;
       }
       return session;
     },
