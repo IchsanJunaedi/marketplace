@@ -2,10 +2,11 @@
 import { prisma } from "@/lib/db";
 import Navbar from "@/components/Navbar";
 import AddToCartButton from "@/components/AddToCartButton";
+import { formatIDR } from "@/lib/utils";
 
 export const metadata = {
-  title: "EnterpriseStore - Deals",
-  description: "Best deals and discounts on enterprise products.",
+  title: "HerbalStore - Deals",
+  description: "Dapatkan penawaran terbaik untuk produk herbal pilihan.",
 };
 
 export const revalidate = 60;
@@ -45,11 +46,10 @@ export default async function DealsPage() {
             Limited Time
           </span>
           <h1 className="font-h1 text-h1 text-on-primary text-3xl font-black">
-            Flash Deals &amp; Special Offers
+            Promo Spesial &amp; Diskon Terbatas
           </h1>
-          <p className="font-body-md text-body-md text-on-primary/80 max-w-xl">
-            Save big on selected enterprise products. Deals are updated
-            regularly — grab them while stock lasts.
+          <p className="font-body-md text-body-md text-on-primary/80 max-w-[36rem]">
+            Hemat lebih banyak untuk produk herbal pilihan. Promo diperbarui secara berkala — dapatkan segera sebelum stok habis.
           </p>
         </section>
 
@@ -98,15 +98,16 @@ export default async function DealsPage() {
                       <div className="mt-auto flex items-end justify-between">
                         <div>
                           <div className="font-body-sm text-body-sm text-on-surface-variant line-through">
-                            ${Number(p.compareAt).toFixed(2)}
+                            {formatIDR(Number(p.compareAt))}
                           </div>
-                          <div className="font-h2 text-h2 text-primary">
-                            ${Number(p.price).toFixed(2)}
+                          <div className="font-h2 text-h2 text-primary font-semibold">
+                            {formatIDR(Number(p.price))}
                           </div>
                         </div>
                         <AddToCartButton
                           productId={p.id}
-                          className="bg-primary text-on-primary hover:bg-surface-tint px-3 py-1.5 rounded font-body-sm text-body-sm font-medium transition-colors flex items-center gap-1 disabled:opacity-60"
+                          disabled={p.stock === 0}
+                          className="bg-primary text-on-primary hover:bg-surface-tint px-3 py-1.5 rounded font-body-sm text-body-sm font-medium transition-colors flex items-center gap-1 active:scale-95 disabled:opacity-60"
                         />
                       </div>
                     </div>
@@ -147,17 +148,17 @@ export default async function DealsPage() {
                       }
                     />
                   </div>
-                  <div className="p-4 flex flex-col flex-1 border-t border-surface-variant">
-                    <h4 className="font-body-md text-body-md font-medium text-on-background mb-1 leading-snug line-clamp-2">
-                      {p.name}
-                    </h4>
-                    <div className="mt-auto flex items-end justify-between pt-3">
-                      <div className="font-h2 text-h2 text-on-background">
-                        ${Number(p.price).toFixed(2)}
+                    <div className="p-4 flex flex-col flex-1 border-t border-surface-variant">
+                      <h4 className="font-body-md text-body-md font-medium text-on-background mb-1 leading-snug line-clamp-2">
+                        {p.name}
+                      </h4>
+                      <div className="mt-auto flex items-end justify-between pt-3">
+                        <div className="font-h2 text-h2 text-on-background font-semibold">
+                          {formatIDR(Number(p.price))}
+                        </div>
+                        <AddToCartButton productId={p.id} disabled={p.stock === 0} />
                       </div>
-                      <AddToCartButton productId={p.id} />
                     </div>
-                  </div>
                 </div>
               ))}
             </div>

@@ -18,7 +18,8 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(address);
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Internal Server Error';
+    return NextResponse.json({ message }, { status: 500 });
   }
 }

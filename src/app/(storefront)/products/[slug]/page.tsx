@@ -4,9 +4,12 @@ import { auth } from "@/auth";
 import { notFound } from "next/navigation";
 import { submitReview } from "@/lib/reviews";
 import ReviewForm from "./ReviewForm";
+import Navbar from "@/components/Navbar";
+import AddToCartButton from "@/components/AddToCartButton";
+import Link from "next/link";
 
-export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const session = await auth();
 
   const product = await prisma.product.findUnique({
@@ -38,24 +41,21 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
   }) && !product.reviews.some(r => r.userId === session.user?.id);
 
   return (
-    <div className={`bg-background min-h-screen text-on-background antialiased font-body-md text-body-md`}>
-      {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-surface-container-lowest border-b border-surface-variant flex justify-between items-center px-6 h-16 mx-auto">
-        <div className="flex items-center gap-8">
-          <a href="/" className="font-h1 text-h1 font-black text-on-background tracking-tight">EnterpriseStore</a>
-        </div>
-        <div className="flex items-center gap-4">
-          <a href="/cart" className="text-on-surface-variant hover:text-on-surface p-2"><span className="material-symbols-outlined">shopping_cart</span></a>
-          <a href="/account" className="text-on-surface-variant hover:text-on-surface p-2"><span className="material-symbols-outlined">account_circle</span></a>
-        </div>
-      </header>
+    <div className="bg-background min-h-screen text-on-background antialiased font-body-md text-body-md">
+      <Navbar active="Shop" />
 
       <main className="pt-24 pb-16 px-6 max-w-[1440px] mx-auto">
         {/* Breadcrumbs */}
         <div className="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm mb-6">
-          <a className="hover:text-primary transition-colors" href="/products">Shop</a>
+          <Link className="hover:text-primary transition-colors font-medium" href="/products">Katalog</Link>
           <span className="material-symbols-outlined text-[16px]">chevron_right</span>
-          <span className="text-on-surface font-medium">{product.name}</span>
+          {product.category && (
+            <>
+              <Link className="hover:text-primary transition-colors font-medium" href={`/products?category=${product.category.slug}`}>{product.category.name}</Link>
+              <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+            </>
+          )}
+          <span className="text-on-surface font-semibold">{product.name}</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -63,7 +63,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
           <div className="lg:col-span-7 bg-surface-container-lowest border border-surface-variant rounded-xl p-6">
             <div className="aspect-[4/3] rounded-lg bg-surface-container overflow-hidden border border-outline-variant relative flex items-center justify-center">
               {product.images[0] ? (
-                <img alt={product.name} className="max-h-full max-w-full object-contain mix-blend-multiply" src={product.images[0].url} />
+                <img alt={product.name} className="max-h-full max-w-full object-contain" src={product.images[0].url} />
               ) : (
                 <span className="material-symbols-outlined text-[64px] text-on-surface-variant">image</span>
               )}
@@ -71,7 +71,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
             <div className="grid grid-cols-4 gap-4 mt-4">
               {product.images.slice(1, 5).map((img, i) => (
                 <div key={i} className="aspect-square rounded-lg border border-outline-variant overflow-hidden">
-                  <img src={img.url} className="w-full h-full object-cover" />
+                  <img src={img.url} alt={`${product.name} detail ${i + 1}`} className="w-full h-full object-cover" />
                 </div>
               ))}
             </div>
@@ -82,12 +82,12 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
             <div className="flex flex-col gap-2">
               <h1 className="font-h1 text-h1 text-on-surface">{product.name}</h1>
               <div className="flex items-center gap-2">
-                <div className="flex text-tertiary-container">
+                <div className="flex text-primary">
                   {[1, 2, 3, 4, 5].map((s) => (
                     <span key={s} className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: `'FILL' ${s <= avgRating ? 1 : 0}` }}>star</span>
                   ))}
                 </div>
-                <span className="text-on-surface-variant text-sm">({product.reviews.length} Reviews)</span>
+                <span className="text-on-surface-variant text-sm">({product.reviews.length} Ulasan)</span>
               </div>
             </div>
 
@@ -100,22 +100,32 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
 
             <div className={`flex items-center gap-2 px-3 py-1.5 rounded w-fit border ${product.stock > 0 ? "bg-secondary-container text-on-secondary-container border-secondary-fixed-dim" : "bg-error-container text-on-error-container border-error"}`}>
               <span className="material-symbols-outlined text-[18px]">{product.stock > 0 ? "check_circle" : "error"}</span>
-              <span className="font-label-caps text-label-caps uppercase tracking-wider">
-                {product.stock > 0 ? `In Stock - ${product.stock} units` : "Out of Stock"}
+              <span className="font-label-caps text-label-caps uppercase tracking-wider font-semibold">
+                {product.stock > 0 ? `Stok Tersedia - ${product.stock} unit` : "Stok Habis"}
               </span>
             </div>
 
-            <div className="flex flex-col gap-3 mt-4">
-              <button className="w-full bg-primary text-on-primary font-body-md text-body-md font-medium h-12 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-container transition-colors disabled:opacity-50" disabled={product.stock === 0}>
-                Add to cart
-              </button>
+            {product.description && (
+              <div className="border-t border-surface-variant pt-4">
+                <h3 className="font-h3 text-h3 text-on-surface mb-2">Deskripsi Produk</h3>
+                <p className="text-on-surface-variant text-sm leading-relaxed">{product.description}</p>
+              </div>
+            )}
+
+            <div className="flex flex-col gap-3 mt-2">
+              <AddToCartButton
+                productId={product.id}
+                disabled={product.stock === 0}
+                label="Tambah Ke Keranjang"
+                className="w-full bg-primary text-on-primary font-body-md text-body-md font-medium h-12 rounded-lg flex items-center justify-center gap-2 hover:bg-surface-tint transition-colors active:scale-95 disabled:opacity-50"
+              />
             </div>
           </div>
         </div>
 
         {/* Reviews Section */}
         <section className="mt-12">
-          <h2 className="text-2xl font-black mb-8">Customer Reviews</h2>
+          <h2 className="text-2xl font-black mb-8">Ulasan Pelanggan</h2>
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Review Form */}
@@ -125,8 +135,8 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
               ) : (
                 <div className="bg-surface-container-low border border-surface-variant rounded-xl p-6 text-sm text-on-surface-variant italic">
                   {session?.user 
-                    ? "You can review this product after your order has been delivered." 
-                    : "Please sign in to leave a review."}
+                    ? "Anda dapat memberikan ulasan setelah pesanan selesai dikirim." 
+                    : "Silakan masuk (sign in) untuk menulis ulasan."}
                 </div>
               )}
             </div>
@@ -134,18 +144,18 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
             {/* Reviews List */}
             <div className="lg:col-span-8 space-y-4">
               {product.reviews.length === 0 ? (
-                <p className="text-on-surface-variant italic">No reviews yet. Be the first to review!</p>
+                <p className="text-on-surface-variant italic">Belum ada ulasan untuk produk ini.</p>
               ) : (
                 product.reviews.map((r) => (
                   <div key={r.id} className="bg-surface-container-lowest border border-surface-variant rounded-xl p-6">
                     <div className="flex justify-between items-start mb-2">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                        <div className="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold">
                           {r.user.name?.[0] || "?"}
                         </div>
                         <div>
                           <p className="font-bold text-sm">{r.user.name}</p>
-                          <div className="flex text-tertiary-container">
+                          <div className="flex text-primary">
                             {[1, 2, 3, 4, 5].map((s) => (
                               <span key={s} className="material-symbols-outlined text-[14px]" style={{ fontVariationSettings: `'FILL' ${s <= r.rating ? 1 : 0}` }}>star</span>
                             ))}

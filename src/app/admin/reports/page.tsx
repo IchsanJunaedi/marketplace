@@ -52,11 +52,18 @@ export default async function AdminReportsPage() {
   }));
 
   // 3. Operational Metrics
-  // Average fulfillment time (PENDING to SHIPPED)
-  // This is a bit complex without dedicated tracking fields, so we'll estimate or use placeholders for now
-  const avgOrderValue = orders.length > 0 
-    ? orders.reduce((sum, o) => sum + o.total.toNumber(), 0) / orders.length 
+  const avgOrderValue = orders.length > 0
+    ? orders.reduce((sum, o) => sum + o.total.toNumber(), 0) / orders.length
     : 0;
+
+  const [activeProducts, inStockProducts, totalReviews] = await Promise.all([
+    prisma.product.count({ where: { status: "ACTIVE" } }),
+    prisma.product.count({ where: { status: "ACTIVE", stock: { gt: 0 } } }),
+    prisma.review.count(),
+  ]);
+
+  const inventoryAccuracy =
+    activeProducts > 0 ? Math.round((inStockProducts / activeProducts) * 1000) / 10 : 100;
 
   return (
     <div className="space-y-lg">
@@ -85,14 +92,16 @@ export default async function AdminReportsPage() {
           <h3 className="font-h2 text-h2 text-on-surface mt-1">{formatIDR(avgOrderValue)}</h3>
         </div>
         <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-md">
-          <p className="font-label-md text-label-md text-on-surface-variant">Inventory Accuracy</p>
-          <h3 className="font-h2 text-h2 text-on-surface mt-1">99.2%</h3>
-          <p className="text-[11px] text-primary font-bold mt-1">OPTIMAL</p>
+          <p className="font-label-md text-label-md text-on-surface-variant">In-Stock Rate</p>
+          <h3 className="font-h2 text-h2 text-on-surface mt-1">{inventoryAccuracy}%</h3>
+          <p className="text-[11px] text-primary font-bold mt-1">
+            {inStockProducts}/{activeProducts} ACTIVE
+          </p>
         </div>
         <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-md">
-          <p className="font-label-md text-label-md text-on-surface-variant">Avg. Fulfillment Time</p>
-          <h3 className="font-h2 text-h2 text-on-surface mt-1">4.2 Hours</h3>
-          <p className="text-[11px] text-primary font-bold mt-1">TOP 5%</p>
+          <p className="font-label-md text-label-md text-on-surface-variant">Total Reviews</p>
+          <h3 className="font-h2 text-h2 text-on-surface mt-1">{totalReviews.toLocaleString()}</h3>
+          <p className="text-[11px] text-on-surface-variant font-bold mt-1">ALL TIME</p>
         </div>
       </div>
     </div>

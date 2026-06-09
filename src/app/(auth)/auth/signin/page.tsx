@@ -13,7 +13,7 @@ export default async function SignInPage({ searchParams }: SignInPageProps) {
       <div className="w-full max-w-[28rem] bg-surface-container-lowest border border-outline-variant rounded-xl p-8">
         <header className="mb-6">
           <h1 className="font-h1 text-h1 text-on-surface mb-2">
-            Masuk ke EnterpriseStore
+            Masuk ke HerbalStore
           </h1>
           <p className="font-body-md text-body-md text-on-surface-variant">
             Belum punya akun?{" "}

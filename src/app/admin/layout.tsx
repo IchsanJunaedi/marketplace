@@ -9,8 +9,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       <nav className="h-screen w-64 fixed left-0 top-0 z-50 bg-surface-container-lowest border-r border-outline-variant flex flex-col transition-all duration-150 ease-in-out">
         {/* Header */}
         <div className="px-6 py-4 border-b border-outline-variant">
-          <h1 className="text-lg font-black tracking-tight text-on-surface">AdminConsole</h1>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Enterprise Suite</p>
+          <h1 className="text-lg font-black tracking-tight text-on-surface">Herbal Console</h1>
+          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Herbal Store Admin</p>
         </div>
         {/* Navigation Links */}
         <div className="flex flex-col flex-1 py-4 space-y-1 overflow-y-auto">
@@ -80,7 +80,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         {/* TopAppBar */}
         <header className="fixed top-0 right-0 left-64 z-40 bg-surface-container-lowest border-b border-outline-variant flex items-center justify-between px-6 h-16 transition-colors duration-200">
           <div className="flex-1 flex items-center">
-            <h2 className="font-h3 text-h3 text-primary mr-8 hidden md:block">AdminPanel</h2>
+            <h2 className="font-h3 text-h3 text-primary mr-8 hidden md:block">Herbal Console</h2>
             <div className="relative w-full max-w-[28rem]">
               <span className="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-on-surface-variant">search</span>
               <input

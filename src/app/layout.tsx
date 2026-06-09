@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "EnterpriseStore — D2C Marketplace",
+  title: "HerbalStore — D2C Marketplace",
   description:
     "D2C Personal Marketplace System — single-store e-commerce platform.",
 };

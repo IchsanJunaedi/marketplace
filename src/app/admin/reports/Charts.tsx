@@ -37,14 +37,15 @@ export function SalesChart({ salesData }: { salesData: ChartsProps["salesData"] 
           />
           <Tooltip 
             contentStyle={{ borderRadius: "8px", border: "1px solid #E5E7EB", boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)" }}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             formatter={(value: any) => [`Rp ${Number(value).toLocaleString()}`, "Revenue"]}
           />
           <Line 
             type="monotone" 
             dataKey="total" 
-            stroke="#2563eb" 
+            stroke="#006e08" 
             strokeWidth={3} 
-            dot={{ r: 4, fill: "#2563eb", strokeWidth: 2, stroke: "#fff" }}
+            dot={{ r: 4, fill: "#006e08", strokeWidth: 2, stroke: "#fff" }}
             activeDot={{ r: 6 }}
           />
         </LineChart>

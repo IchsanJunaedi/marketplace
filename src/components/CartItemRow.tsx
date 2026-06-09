@@ -3,6 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useTransition } from "react";
 import { updateCartItem, removeCartItem } from "@/lib/cart";
+import { formatIDR } from "@/lib/utils";
 
 interface CartItemRowProps {
   id: string;
@@ -35,7 +36,7 @@ export default function CartItemRow({
     });
   }
 
-  const lineTotal = (unitPrice * quantity).toFixed(2);
+  const lineTotal = unitPrice * quantity;
 
   return (
     <div
@@ -53,7 +54,7 @@ export default function CartItemRow({
             SKU: {sku}
           </div>
           <div className="font-data-tabular text-data-tabular text-primary mt-1">
-            ${unitPrice.toFixed(2)}
+            {formatIDR(unitPrice)}
           </div>
         </div>
       </div>
@@ -83,7 +84,7 @@ export default function CartItemRow({
 
         {/* Line total */}
         <div className="w-24 text-right font-data-tabular text-data-tabular text-on-surface font-semibold">
-          ${lineTotal}
+          {formatIDR(lineTotal)}
         </div>
 
         {/* Delete */}

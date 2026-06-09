@@ -7,8 +7,8 @@ export default function Page() {
 {/*  SideNavBar (from JSON)  */}
 <aside className="h-screen w-64 fixed left-0 top-0 z-50 border-r border-outline-variant bg-surface-container-lowest flex flex-col py-4 space-y-1">
 <div className="px-6 py-4 mb-xl">
-<h1 className="text-lg font-black tracking-tight text-on-surface">AdminConsole</h1>
-<p className="font-body-sm text-body-sm text-on-surface-variant">Enterprise Suite</p>
+<h1 className="text-lg font-black tracking-tight text-on-surface">Herbal Console</h1>
+<p className="font-body-sm text-body-sm text-on-surface-variant">Herbal Store Admin</p>
 </div>
 <nav className="flex-1 flex flex-col space-y-1 px-sm">
 {/*  Inactive  */}
@@ -80,7 +80,7 @@ export default function Page() {
 <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
 <div className="md:col-span-2">
 <label className="font-label-md text-label-md text-on-surface">Store Name</label>
-<input className="w-full mt-xs px-md py-[10px] bg-surface-container-lowest border border-outline-variant rounded focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary font-body-md text-body-md text-on-surface" type="text" value="Gojek Marketplace Central" />
+<input className="w-full mt-xs px-md py-[10px] bg-surface-container-lowest border border-outline-variant rounded focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary font-body-md text-body-md text-on-surface" type="text" defaultValue="HerbalStore Central" />
 </div>
 <div>
 <label className="font-label-md text-label-md text-on-surface">Support Email</label>
