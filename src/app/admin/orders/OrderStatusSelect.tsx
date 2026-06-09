@@ -1,43 +1,41 @@
 "use client";
 
-// Manual enum definition to avoid importing the Prisma client (which may use node:module) into the browser.
-// This matches the OrderStatus enum in the database.
-enum OrderStatus {
-  PENDING = "PENDING",
-  PAID = "PAID",
-  SHIPPED = "SHIPPED",
-  DELIVERED = "DELIVERED",
-  CANCELLED = "CANCELLED",
-  EXPIRED = "EXPIRED"
+import { useState } from "react";
+import { OrderStatus } from "@/generated/prisma/enums";
+
+const POSITIVE = new Set<string>([OrderStatus.PAID, OrderStatus.SHIPPED, OrderStatus.DELIVERED]);
+const NEGATIVE = new Set<string>([OrderStatus.CANCELLED, OrderStatus.EXPIRED]);
+
+function statusClass(status: string) {
+  if (POSITIVE.has(status as OrderStatus)) return "bg-primary-container/20 text-primary";
+  if (NEGATIVE.has(status as OrderStatus)) return "bg-error-container/50 text-error";
+  return "bg-surface-container-high text-on-surface";
 }
 
-export default function OrderStatusSelect({ 
-  orderId, 
+export default function OrderStatusSelect({
+  orderId,
   initialStatus,
-  onUpdate
-}: { 
-  orderId: string; 
+  onUpdate,
+}: {
+  orderId: string;
   initialStatus: string;
-  onUpdate: (orderId: string, status: any) => Promise<any>;
+  onUpdate: (orderId: string, status: OrderStatus) => Promise<unknown>;
 }) {
+  const [status, setStatus] = useState(initialStatus);
+
   return (
-    <select 
+    <select
       name="status"
-      defaultValue={initialStatus}
-      className={`px-2 py-1 rounded text-[11px] font-bold uppercase tracking-wide border-none focus:ring-2 focus:ring-primary outline-none ${
-        initialStatus === OrderStatus.PAID || initialStatus === OrderStatus.DELIVERED || initialStatus === OrderStatus.SHIPPED
-          ? "bg-primary-container/20 text-primary" 
-          : initialStatus === OrderStatus.CANCELLED || initialStatus === OrderStatus.EXPIRED
-          ? "bg-error-container/50 text-error"
-          : "bg-surface-container-high text-on-surface"
-      }`}
+      value={status}
+      className={`px-2 py-1 rounded text-[11px] font-bold uppercase tracking-wide border-none focus:ring-2 focus:ring-primary outline-none ${statusClass(status)}`}
       onChange={async (e) => {
-        const newStatus = e.target.value as OrderStatus;
-        await onUpdate(orderId, newStatus);
+        const next = e.target.value as OrderStatus;
+        setStatus(next);
+        await onUpdate(orderId, next);
       }}
     >
-      {Object.values(OrderStatus).map((status) => (
-        <option key={status} value={status}>{status}</option>
+      {Object.values(OrderStatus).map((s) => (
+        <option key={s} value={s}>{s}</option>
       ))}
     </select>
   );

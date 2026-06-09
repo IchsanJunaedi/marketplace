@@ -19,7 +19,7 @@ export default async function Navbar({ active }: { active?: string }) {
           href="/"
           className="text-xl font-black text-on-background tracking-tight"
         >
-          EnterpriseStore
+          HerbalStore
         </Link>
         <nav className="hidden md:flex items-center gap-6 mt-0.5">
           {navLinks.map((link) => {

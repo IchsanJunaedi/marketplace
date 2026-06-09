@@ -4,9 +4,10 @@ import { auth } from "@/auth";
 import { getCart } from "@/lib/cart";
 import Navbar from "@/components/Navbar";
 import CartItemRow from "@/components/CartItemRow";
+import { formatIDR } from "@/lib/utils";
 
 export const metadata = {
-  title: "EnterpriseStore - Shopping Cart",
+  title: "HerbalStore - Shopping Cart",
 };
 
 export default async function CartPage() {
@@ -32,11 +33,11 @@ export default async function CartPage() {
 
       <main className="pt-24 px-6 pb-12 max-w-[1440px] mx-auto min-h-screen flex flex-col">
         <div className="mb-6">
-          <h1 className="font-h1 text-h1 text-on-background">Shopping Cart</h1>
+          <h1 className="font-h1 text-h1 text-on-background">Keranjang Belanja</h1>
           <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">
             {items.length === 0
-              ? "Your cart is empty."
-              : `${items.length} item${items.length !== 1 ? "s" : ""} in your cart`}
+              ? "Keranjang belanja Anda kosong."
+              : `Ada ${items.length} produk di dalam keranjang Anda`}
           </p>
         </div>
 
@@ -46,13 +47,13 @@ export default async function CartPage() {
               shopping_cart
             </span>
             <p className="font-h2 text-h2 text-on-surface-variant">
-              Your cart is empty
+              Keranjang Anda kosong
             </p>
             <Link
-              href="/categories"
+              href="/products"
               className="bg-primary text-on-primary px-6 py-2.5 rounded font-body-md text-body-md hover:bg-surface-tint transition-colors"
             >
-              Start Shopping
+              Mulai Belanja
             </Link>
           </div>
         ) : (
@@ -60,11 +61,11 @@ export default async function CartPage() {
             {/* Cart Items */}
             <div className="flex-1 w-full bg-surface-container-lowest border border-surface-variant rounded-lg overflow-hidden">
               <div className="px-6 py-4 border-b border-surface-variant bg-surface-bright flex justify-between items-center">
-                <span className="font-data-tabular text-data-tabular text-on-surface-variant uppercase tracking-wider">
-                  Item Details
+                <span className="font-data-tabular text-data-tabular text-on-surface-variant uppercase tracking-wider font-semibold">
+                  Detail Produk
                 </span>
-                <span className="font-data-tabular text-data-tabular text-on-surface-variant uppercase tracking-wider">
-                  Action
+                <span className="font-data-tabular text-data-tabular text-on-surface-variant uppercase tracking-wider font-semibold">
+                  Aksi
                 </span>
               </div>
 
@@ -85,26 +86,26 @@ export default async function CartPage() {
             <div className="w-full lg:w-[380px] flex flex-col gap-4">
               <div className="bg-surface-container-lowest border border-surface-variant rounded-lg p-6 flex flex-col shadow-sm">
                 <h2 className="font-h2 text-h2 text-on-surface mb-6 border-b border-surface-variant pb-4">
-                  Order Summary
+                  Ringkasan Pesanan
                 </h2>
 
                 <div className="flex flex-col gap-4 mb-6">
                   <div className="flex justify-between items-center font-body-md text-body-md text-on-surface-variant">
-                    <span>Subtotal ({items.length} items)</span>
-                    <span className="font-data-tabular text-data-tabular text-on-surface">
-                      ${subtotal.toFixed(2)}
+                    <span>Subtotal ({items.length} barang)</span>
+                    <span className="font-data-tabular text-data-tabular text-on-surface font-semibold">
+                      {formatIDR(subtotal)}
                     </span>
                   </div>
                   <div className="flex justify-between items-center font-body-md text-body-md text-on-surface-variant">
-                    <span>Shipping</span>
-                    <span className="font-data-tabular text-data-tabular text-on-surface">
-                      Calculated at checkout
+                    <span>Ongkos Kirim</span>
+                    <span className="font-body-sm text-body-sm text-on-surface-variant italic">
+                      Dihitung saat checkout
                     </span>
                   </div>
                   <div className="flex justify-between items-center font-body-md text-body-md text-on-surface-variant">
-                    <span>Tax (8%)</span>
-                    <span className="font-data-tabular text-data-tabular text-on-surface">
-                      ${tax.toFixed(2)}
+                    <span>Pajak (8%)</span>
+                    <span className="font-data-tabular text-data-tabular text-on-surface font-semibold">
+                      {formatIDR(tax)}
                     </span>
                   </div>
                 </div>
@@ -115,17 +116,17 @@ export default async function CartPage() {
                     className="block font-label-caps text-label-caps text-on-surface-variant mb-2"
                     htmlFor="voucher"
                   >
-                    Voucher / Promo Code
+                    Kupon / Kode Promo
                   </label>
                   <div className="flex">
                     <input
                       className="flex-1 bg-surface-container-lowest border border-outline-variant border-r-0 rounded-l px-3 py-2 font-body-sm text-body-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none placeholder-outline-variant"
                       id="voucher"
-                      placeholder="Enter code"
+                      placeholder="Masukkan kode"
                       type="text"
                     />
                     <button className="bg-surface-container text-on-surface px-4 py-2 border border-outline-variant rounded-r font-label-caps text-label-caps hover:bg-surface-variant transition-colors">
-                      Apply
+                      Gunakan
                     </button>
                   </div>
                 </div>
@@ -136,28 +137,28 @@ export default async function CartPage() {
                     <span className="font-h2 text-h2 text-on-surface">
                       Total
                     </span>
-                    <span className="font-h1 text-h1 text-primary">
-                      ${total.toFixed(2)}
+                    <span className="font-h1 text-h1 text-primary font-bold">
+                      {formatIDR(total)}
                     </span>
                   </div>
                 </div>
 
                 <Link
                   href="/checkout"
-                  className="w-full bg-primary text-on-primary py-3 rounded font-label-caps text-label-caps hover:bg-on-primary-fixed-variant transition-colors flex justify-center items-center gap-2"
+                  className="w-full bg-primary text-on-primary py-3 rounded font-label-caps text-label-caps hover:bg-surface-tint transition-colors flex justify-center items-center gap-2 active:scale-95 duration-150 shadow"
                 >
                   <span className="material-symbols-outlined text-[18px]">
                     lock
                   </span>
-                  Proceed to Checkout
+                  Lanjut ke Checkout
                 </Link>
               </div>
 
               <Link
-                href="/categories"
+                href="/products"
                 className="text-center font-body-sm text-body-sm text-primary hover:underline"
               >
-                ← Continue Shopping
+                ← Lanjutkan Belanja
               </Link>
             </div>
           </div>

@@ -111,8 +111,9 @@ export async function POST(req: Request) {
       token: snapTransaction.token,
       redirect_url: snapTransaction.redirect_url
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Checkout error:', error);
-    return NextResponse.json({ message: error.message || 'Internal Server Error' }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Internal Server Error';
+    return NextResponse.json({ message }, { status: 500 });
   }
 }

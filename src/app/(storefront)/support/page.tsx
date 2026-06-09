@@ -1,15 +1,15 @@
 import Navbar from "@/components/Navbar";
 
 export const metadata = {
-  title: "EnterpriseStore - Support",
-  description: "Get help and support for your enterprise purchases.",
+  title: "HerbalStore - Support",
+  description: "Layanan bantuan pelanggan HerbalStore.",
 };
 
 const faqs = [
   { q: "How do I track my order?", a: "You can track your order from your Account page under 'My Orders'. A tracking link will also be emailed to you once your order is dispatched." },
   { q: "What is the return policy?", a: "We offer a 30-day hassle-free return policy. Items must be in original packaging. Contact our support team to initiate a return request." },
-  { q: "How long does shipping take?", a: "Standard shipping takes 3–7 business days. Expedited options (1–2 days) are available at checkout. Free shipping on orders over $500." },
-  { q: "Do you offer bulk/enterprise pricing?", a: "Yes! We offer volume discounts for orders of 10+ units. Contact our enterprise sales team at enterprise@enterprisestore.com for a custom quote." },
+  { q: "Berapa lama waktu pengiriman?", a: "Pengiriman standar memakan waktu 3–7 hari kerja. Pilihan pengiriman cepat (1–2 hari) tersedia saat checkout. Gratis ongkos kirim untuk pesanan di atas Rp500.000." },
+  { q: "Apakah Anda menawarkan harga grosir?", a: "Ya! Kami menawarkan diskon volume untuk pesanan grosir (minimal 10 unit). Hubungi tim penjualan kami di sales@herbalstore.com untuk penawaran khusus." },
   { q: "How do I cancel an order?", a: "Orders can be cancelled within 1 hour of placement. After that, please wait for delivery and initiate a return." },
 ];
 
@@ -22,8 +22,8 @@ export default function SupportPage() {
         <section className="text-center flex flex-col items-center gap-4 mt-4">
           <span className="bg-secondary-container text-surface-tint font-label-caps text-label-caps uppercase px-3 py-1 rounded-sm tracking-wider">Help Center</span>
           <h1 className="font-h1 text-h1 text-on-background text-4xl font-black">How can we help you?</h1>
-          <p className="font-body-md text-body-md text-on-surface-variant max-w-lg">Search our knowledge base or get in touch with our enterprise support team.</p>
-          <div className="relative w-full max-w-lg mt-2">
+          <p className="font-body-md text-body-md text-on-surface-variant max-w-[32rem]">Cari di pusat bantuan kami atau hubungi langsung tim layanan pelanggan kami.</p>
+          <div className="relative w-full max-w-[32rem] mt-2">
             <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
             <input className="w-full pl-12 pr-4 py-3 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim outline-none transition-all placeholder:text-on-surface-variant shadow-sm" placeholder="Search for help articles..." type="text" />
           </div>

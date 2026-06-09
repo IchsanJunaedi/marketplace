@@ -5,7 +5,7 @@ import { getCart } from "@/lib/cart";
 import CheckoutClient from "./CheckoutClient";
 
 export const metadata = {
-  title: "EnterpriseStore - Checkout",
+  title: "HerbalStore - Checkout",
 };
 
 export default async function CheckoutPage() {

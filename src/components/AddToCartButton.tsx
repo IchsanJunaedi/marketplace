@@ -7,12 +7,14 @@ interface Props {
   productId: string;
   label?: string;
   className?: string;
+  disabled?: boolean;
 }
 
 export default function AddToCartButton({
   productId,
   label = "Add",
   className,
+  disabled = false,
 }: Props) {
   const [isPending, startTransition] = useTransition();
 
@@ -25,7 +27,7 @@ export default function AddToCartButton({
   return (
     <button
       onClick={handleClick}
-      disabled={isPending}
+      disabled={isPending || disabled}
       className={
         className ??
         "border border-outline text-primary hover:bg-surface-container px-3 py-1.5 rounded font-body-sm text-body-sm font-medium transition-colors flex items-center gap-1 disabled:opacity-60"

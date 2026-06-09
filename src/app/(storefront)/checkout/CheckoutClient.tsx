@@ -45,7 +45,6 @@ export default function CheckoutClient({
   cartItems,
   subtotal,
   addresses,
-  userEmail,
   userName,
   userPhone,
   midtransClientKey,
@@ -116,14 +115,26 @@ export default function CheckoutClient({
 
       const { token } = await res.json();
 
-      (window as any).snap.pay(token, {
+      interface SnapWindow extends Window {
+        snap?: {
+          pay: (token: string, callbacks: {
+            onSuccess?: () => void;
+            onPending?: () => void;
+            onError?: () => void;
+            onClose?: () => void;
+          }) => void;
+        };
+      }
+
+      (window as unknown as SnapWindow).snap?.pay(token, {
         onSuccess: () => { window.location.href = "/account?tab=orders"; },
         onPending: () => { window.location.href = "/account?tab=orders"; },
         onError: () => { setErrorMsg("Payment failed. Please try again."); setIsLoading(false); },
         onClose: () => { setIsLoading(false); },
       });
-    } catch (err: any) {
-      setErrorMsg(err.message ?? "Something went wrong");
+    } catch (err) {
+      const error = err as Error;
+      setErrorMsg(error.message ?? "Something went wrong");
       setIsLoading(false);
     }
   }
@@ -140,7 +151,7 @@ export default function CheckoutClient({
         <header className="bg-surface-container-lowest border-b border-outline-variant sticky top-0 z-50">
           <div className="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between">
             <Link href="/" className="text-xl font-black text-on-background tracking-tight">
-              EnterpriseStore
+              HerbalStore
             </Link>
             <div className="flex items-center gap-2 text-secondary font-body-sm">
               <span className="material-symbols-outlined text-sm">lock</span>

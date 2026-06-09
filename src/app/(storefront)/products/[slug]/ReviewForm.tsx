@@ -29,7 +29,7 @@ export default function ReviewForm({
         setSuccess(true);
         (e.target as HTMLFormElement).reset();
       }
-    } catch (err) {
+    } catch {
       setError("An unexpected error occurred.");
     } finally {
       setLoading(false);

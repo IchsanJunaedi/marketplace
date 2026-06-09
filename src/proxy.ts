@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import { authConfig } from "@/auth.config";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 /**
  * Next.js 16 renamed `middleware.ts` to `proxy.ts`. This file runs on every
@@ -14,7 +14,8 @@ const RATE_LIMIT = 100;
 const WINDOW_MS = 60 * 1000;
 
 export default auth((req) => {
-  const ip = (req as any).ip || req.headers.get('x-forwarded-for') || 'anonymous';
+  const nextReq = req as NextRequest & { ip?: string };
+  const ip = nextReq.ip || req.headers.get('x-forwarded-for') || 'anonymous';
   const now = Date.now();
   
   // Rate limiting for sensitive routes

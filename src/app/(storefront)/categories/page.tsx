@@ -2,9 +2,11 @@
 import { prisma } from "@/lib/db";
 import Navbar from "@/components/Navbar";
 import AddToCartButton from "@/components/AddToCartButton";
+import { formatIDR } from "@/lib/utils";
+import Link from "next/link";
 
 export const metadata = {
-  title: "EnterpriseStore - Categories",
+  title: "HerbalStore - Categories",
   description: "Browse all product categories.",
 };
 
@@ -56,7 +58,7 @@ export default async function CategoriesPage({
               Categories
             </h3>
             <div className="flex flex-col gap-1">
-              <a
+              <Link
                 href="/categories"
                 className={`flex items-center justify-between px-3 py-2 rounded font-body-sm text-body-sm transition-colors ${!category ? "bg-primary text-on-primary" : "text-on-surface hover:bg-surface-container"}`}
               >
@@ -64,11 +66,11 @@ export default async function CategoriesPage({
                 <span className="font-data-tabular text-[11px]">
                   {products.length}
                 </span>
-              </a>
+              </Link>
               {categories.map((cat) => {
                 const isActive = category === cat.slug;
                 return (
-                  <a
+                  <Link
                     key={cat.id}
                     href={`/categories?category=${cat.slug}`}
                     className={`flex items-center justify-between px-3 py-2 rounded font-body-sm text-body-sm transition-colors ${isActive ? "bg-primary text-on-primary" : "text-on-surface hover:bg-surface-container"}`}
@@ -77,7 +79,7 @@ export default async function CategoriesPage({
                     <span className="font-data-tabular text-[11px]">
                       {cat._count.products}
                     </span>
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -94,13 +96,13 @@ export default async function CategoriesPage({
                 const isActive = (sort ?? "") === opt.value;
                 const href = `/categories${category ? `?category=${category}&` : "?"}sort=${opt.value}`;
                 return (
-                  <a
+                  <Link
                     key={opt.value}
                     href={href}
                     className={`px-3 py-2 rounded font-body-sm text-body-sm transition-colors ${isActive ? "bg-secondary-container text-surface-tint font-medium" : "text-on-surface hover:bg-surface-container"}`}
                   >
                     {opt.label}
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -130,7 +132,10 @@ export default async function CategoriesPage({
                   key={p.id}
                   className="bg-surface-container-lowest border border-surface-variant rounded overflow-hidden flex flex-col group hover:border-outline transition-colors"
                 >
-                  <div className="h-48 w-full bg-surface-container relative p-4 flex items-center justify-center">
+                  <Link
+                    href={`/products/${p.slug}`}
+                    className="h-48 w-full bg-surface-container relative p-4 flex items-center justify-center overflow-hidden"
+                  >
                     {p.compareAt && (
                       <div className="absolute top-2 left-2 bg-surface-container-lowest text-primary border border-outline-variant px-1.5 py-0.5 rounded font-label-caps text-label-caps uppercase">
                         Sale
@@ -143,34 +148,37 @@ export default async function CategoriesPage({
                     )}
                     <img
                       alt={p.name}
-                      className="max-h-full max-w-full object-contain mix-blend-multiply"
+                      className="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300"
                       src={
                         p.images[0]?.url ??
                         "https://placehold.co/200x200?text=No+Image"
                       }
                     />
-                  </div>
+                  </Link>
                   <div className="p-4 flex flex-col flex-1 border-t border-surface-variant">
                     {p.category && (
                       <div className="font-body-sm text-body-sm text-on-surface-variant mb-1">
                         {p.category.name}
                       </div>
                     )}
-                    <h4 className="font-body-md text-body-md font-medium text-on-background mb-3 leading-snug line-clamp-2">
+                    <Link
+                      href={`/products/${p.slug}`}
+                      className="font-body-md text-body-md font-medium text-on-background mb-3 leading-snug line-clamp-2 hover:text-primary transition-colors block"
+                    >
                       {p.name}
-                    </h4>
+                    </Link>
                     <div className="mt-auto flex items-end justify-between">
                       <div>
                         {p.compareAt && (
                           <div className="font-body-sm text-body-sm text-on-surface-variant line-through">
-                            ${Number(p.compareAt).toFixed(2)}
+                            {formatIDR(Number(p.compareAt))}
                           </div>
                         )}
                         <div className="font-h2 text-h2 text-on-background">
-                          ${Number(p.price).toFixed(2)}
+                          {formatIDR(Number(p.price))}
                         </div>
                       </div>
-                      <AddToCartButton productId={p.id} />
+                      <AddToCartButton productId={p.id} disabled={p.stock === 0} />
                     </div>
                   </div>
                 </div>

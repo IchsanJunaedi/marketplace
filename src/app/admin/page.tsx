@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/db";
 import { OrderStatus } from "@/generated/prisma/client";
 import { formatIDR } from "@/lib/utils";
+import Link from "next/link";
 
 export default async function AdminOverviewPage() {
   // Fetch real-time metrics
@@ -229,12 +230,12 @@ export default async function AdminOverviewPage() {
             )}
           </div>
           <div className="p-4 border-t border-outline-variant bg-surface-bright">
-            <a 
+            <Link 
               href="/admin/inventory"
               className="w-full block text-center py-2 bg-surface-container-lowest border border-outline-variant text-on-surface font-label-md text-label-md rounded-DEFAULT hover:bg-surface-container-low transition-colors"
             >
               Manage Inventory
-            </a>
+            </Link>
           </div>
         </div>
       </div>
