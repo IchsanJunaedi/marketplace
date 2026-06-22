@@ -17,6 +17,7 @@ function createPrisma(): PrismaClient {
     database: url.pathname.replace(/^\//, ""),
     ssl: url.searchParams.get("sslaccept") ? {} : undefined,
     connectionLimit: 5,
+    connectTimeout: 15000, // 15 seconds to allow cross-region connection during build (US to Singapore)
   });
 
   return new PrismaClient({
